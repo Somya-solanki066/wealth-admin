@@ -1,0 +1,38 @@
+.teachers-page {
+  background: white;
+  padding: 30px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.teachers-table-container {
+  overflow-x: auto;
+}
+
+.teachers-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+}
+
+.teachers-table thead {
+  background: #f8f9fa;
+}
+
+.teachers-table th {
+  padding: 12px;
+  text-align: left;
+  font-weight: 600;
+  color: #2c3e50;
+  border-bottom: 2px solid #e0e0e0;
+}
+
+.teachers-table td {
+  padding: 12px;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.teachers-table tbody tr:hover {
+  background: #f8f9fa;
+}
+
