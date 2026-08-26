@@ -1,8 +1,9 @@
-// Test API connection utility
+import { getApiUrl } from '../config/api';
+
 export const testConnection = async () => {
+  const API_URL = getApiUrl();
   try {
-    const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
-    const response = await fetch(`${API_URL.replace('/api', '')}/api/auth/test-cookie`, {
+    const response = await fetch(`${API_URL}/auth/test-cookie`, {
       method: 'GET',
       credentials: 'include',
     });
@@ -16,8 +17,7 @@ export const testConnection = async () => {
     return { 
       success: false, 
       message: `Cannot connect to API: ${error.message}`,
-      details: 'Make sure backend server is running on http://localhost:5000'
+      details: `Make sure backend is reachable at ${API_URL}`
     };
   }
 };
-

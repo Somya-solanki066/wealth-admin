@@ -1,10 +1,16 @@
-// API Configuration
-const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
+function stripTrailingSlash(url) {
+  return String(url || "").replace(/\/+$/, "");
+}
 
-export const getApiUrl = () => API_BASE_URL;
+function getRawApiUrl() {
+  return import.meta.env.VITE_API_URL || "http://localhost:5000/api";
+}
+
+export const getApiOrigin = () => stripTrailingSlash(getRawApiUrl()).replace(/\/api$/i, "");
+
+export const getApiUrl = () => `${getApiOrigin()}/api`;
 
 export default {
-  baseURL: API_BASE_URL,
+  baseURL: getApiUrl(),
   timeout: 10000,
 };
-

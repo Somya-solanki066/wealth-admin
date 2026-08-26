@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Plus, Trash2, Check, X } from 'lucide-react';
+import { getApiUrl } from '../config/api';
 import './Settings.css';
 
 const Settings = () => {
@@ -16,7 +17,7 @@ const Settings = () => {
 
   const fetchSettings = async () => {
     try {
-      const response = await axios.get('http://localhost:5000/api/settings');
+      const response = await axios.get(`${getApiUrl()}/settings`);
       let data = response.data.data;
       
       // Ensure defaults if old schema is present
@@ -44,7 +45,7 @@ const Settings = () => {
     setSaving(true);
     setMessage({ text: '', type: '' });
     try {
-      await axios.put('http://localhost:5000/api/settings', settings);
+      await axios.put(`${getApiUrl()}/settings`, settings);
       setMessage({ text: 'Settings saved successfully', type: 'success' });
     } catch (error) {
       console.error('Error saving settings:', error);

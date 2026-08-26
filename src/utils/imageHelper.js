@@ -1,5 +1,6 @@
-// Image Helper for Admin Panel
-const API_BASE_URL = import.meta.env.VITE_API_URL?.replace('/api', '') || 'http://localhost:5000';
+import { getApiOrigin } from '../config/api';
+
+const API_BASE_URL = getApiOrigin();
 
 /**
  * Get full image URL from relative path
