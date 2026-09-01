@@ -310,6 +310,29 @@
   font-size: 14px;
 }
 
+.flag-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 12px;
+}
+
+.flag-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #F0EBE0;
+  font-size: 13px;
+  background: #080808;
+  border: 1px solid #242424;
+  border-radius: 8px;
+  padding: 10px 12px;
+}
+
+.flag-row input {
+  width: auto;
+  max-width: none;
+}
+
 .features-header {
   display: flex;
   justify-content: space-between;
@@ -454,3 +477,39 @@
   background: rgba(224, 82, 82, 0.2);
 }
 
+
+.world-plan-tabs {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin: 16px 0 8px;
+  padding: 6px;
+  background: #111;
+  border-radius: 14px;
+  border: 1px solid #242424;
+  width: fit-content;
+}
+
+.world-plan-tab {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  border-radius: 10px;
+  border: none;
+  background: transparent;
+  color: #909090;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.world-plan-tab:hover {
+  color: #F0EBE0;
+}
+
+.world-plan-tab.active {
+  background: linear-gradient(135deg, #E2C06A, #7A5E1E);
+  color: #080808;
+}

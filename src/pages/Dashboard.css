@@ -50,6 +50,20 @@
   border: 1px solid #242424;
 }
 
+.clickable-card {
+  width: 100%;
+  text-align: left;
+  cursor: pointer;
+  font: inherit;
+  color: inherit;
+  display: block;
+}
+
+.clickable-card:focus-visible {
+  outline: 2px solid #C9A84C;
+  outline-offset: 2px;
+}
+
 .stat-card:hover {
   transform: translateY(-4px);
   box-shadow: 0 8px 24px rgba(0,0,0,0.5);
@@ -192,6 +206,54 @@
 
 .action-btn svg {
   flex-shrink: 0;
+}
+
+.ops-tables {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  margin-bottom: 30px;
+}
+
+.ops-table-card {
+  background: #0f0f0f;
+  border: 1px solid #242424;
+  border-radius: 12px;
+  padding: 20px;
+  overflow-x: auto;
+}
+
+.ops-table-card h3 {
+  margin: 0 0 14px;
+  color: #C9A84C;
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 18px;
+}
+
+.ops-table-card table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+
+.ops-table-card th,
+.ops-table-card td {
+  text-align: left;
+  padding: 8px;
+  border-bottom: 1px solid #242424;
+  color: #F0EBE0;
+}
+
+.ops-table-card th {
+  color: #C9A84C;
+  font-size: 11px;
+  text-transform: uppercase;
+}
+
+@media (max-width: 900px) {
+  .ops-tables {
+    grid-template-columns: 1fr;
+  }
 }
 
 .loading {

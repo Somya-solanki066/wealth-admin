@@ -1,7 +1,32 @@
 import { useState, useEffect } from 'react';
+import { Eye, UserPlus, UserMinus, Trash2 } from 'lucide-react';
 import { userService } from '../services/userService';
 import { getProfilePictureUrl } from '../utils/imageHelper';
+import api from '../services/api';
 import './Users.css';
+
+function parseDate(value) {
+  if (!value) return null;
+  if (typeof value === 'string' || typeof value === 'number') {
+    const date = new Date(value);
+    return Number.isNaN(date.getTime()) ? null : date;
+  }
+  const seconds = value.seconds || value._seconds;
+  if (seconds) return new Date(seconds * 1000);
+  const date = new Date(value);
+  return Number.isNaN(date.getTime()) ? null : date;
+}
+
+function formatDate(value) {
+  const date = parseDate(value);
+  return date ? date.toLocaleDateString() : 'N/A';
+}
+
+function toDateInput(value) {
+  const date = parseDate(value);
+  if (!date) return '';
+  return date.toISOString().slice(0, 10);
+}
 
 const Users = () => {
   const [users, setUsers] = useState([]);
@@ -10,17 +35,37 @@ const Users = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedUser, setSelectedUser] = useState(null);
   const [showModal, setShowModal] = useState(false);
+  const [plans, setPlans] = useState([]);
+  const [allPlans, setAllPlans] = useState([]);
+  const [grantPlanId, setGrantPlanId] = useState('');
+  const [editPlanId, setEditPlanId] = useState('');
+  const [editExpiry, setEditExpiry] = useState('');
+  const [editPremium, setEditPremium] = useState(false);
+  const [savingSub, setSavingSub] = useState(false);
 
   useEffect(() => {
     fetchUsers();
+    fetchPlans();
   }, [page]);
+
+  const fetchPlans = async () => {
+    try {
+      const response = await api.get('/settings');
+      const loaded = response.data?.data?.plans || [];
+      setAllPlans(loaded);
+      const paid = loaded.filter((p) => !p.isFree && p.id !== 'free');
+      setPlans(paid);
+      if (paid[0]?.id) setGrantPlanId(paid[0].id);
+    } catch (error) {
+      console.error('Error fetching plans:', error);
+    }
+  };
 
   const fetchUsers = async () => {
     try {
       setLoading(true);
       const response = await userService.getAllUsers(page, 20);
-      
-      // API returns array directly or wrapped in success object
+
       if (Array.isArray(response)) {
         setUsers(response);
       } else if (response.success) {
@@ -39,6 +84,23 @@ const Users = () => {
     }
   };
 
+  const applyUserToModal = (data) => {
+    setSelectedUser(data);
+    const planId = data.subscriptionPlan && data.subscriptionPlan !== 'None'
+      ? data.subscriptionPlan
+      : 'free';
+    setEditPlanId(planId);
+    setEditExpiry(toDateInput(data.subscriptionExpiry));
+    setEditPremium(!!data.isPremium);
+  };
+
+  const refreshSelectedUser = async (userId) => {
+    const response = await userService.getUserById(userId);
+    const data = response.data || response.user;
+    applyUserToModal(data);
+    fetchUsers();
+  };
+
   const handleSearch = async () => {
     if (!searchQuery.trim()) {
       fetchUsers();
@@ -47,8 +109,7 @@ const Users = () => {
     try {
       setLoading(true);
       const response = await userService.searchUsers(searchQuery);
-      
-      // Handle different response formats
+
       if (Array.isArray(response)) {
         setUsers(response);
       } else if (response.success) {
@@ -75,6 +136,10 @@ const Users = () => {
       if (response.success || response.message) {
         alert('User deleted successfully');
         fetchUsers();
+        if (selectedUser?.id === userId) {
+          setShowModal(false);
+          setSelectedUser(null);
+        }
       } else {
         alert('Error deleting user: ' + (response.message || 'Unknown error'));
       }
@@ -85,21 +150,108 @@ const Users = () => {
     }
   };
 
+  const handleGrant = async (userId, planId) => {
+    if (!planId) {
+      alert('Select a paid plan first.');
+      return;
+    }
+    if (!window.confirm('Grant this paid plan to the user?')) return;
+    try {
+      const response = await userService.setSubscription(userId, { action: 'grant', planId });
+      alert(response.message || 'Premium granted');
+      if (selectedUser?.id === userId) {
+        await refreshSelectedUser(userId);
+      } else {
+        fetchUsers();
+      }
+    } catch (error) {
+      alert(error.response?.data?.error || 'Failed to grant premium');
+    }
+  };
+
+  const handleRevoke = async (userId) => {
+    if (!window.confirm('Revoke premium and move this user to the free plan?')) return;
+    try {
+      const response = await userService.setSubscription(userId, { action: 'revoke' });
+      alert(response.message || 'Premium revoked');
+      if (selectedUser?.id === userId) {
+        await refreshSelectedUser(userId);
+      } else {
+        fetchUsers();
+      }
+    } catch (error) {
+      alert(error.response?.data?.error || 'Failed to revoke premium');
+    }
+  };
+
   const handleView = async (userId) => {
     try {
       const response = await userService.getUserById(userId);
-      setSelectedUser(response.data || response.user);
+      applyUserToModal(response.data || response.user);
       setShowModal(true);
     } catch (error) {
       alert('Error fetching user details');
     }
   };
 
+  const handleSaveSubscription = async () => {
+    if (!selectedUser) return;
+    setSavingSub(true);
+    try {
+      await userService.setSubscription(selectedUser.id, {
+        action: 'update',
+        planId: editPlanId,
+        subscriptionExpiry: editExpiry || null,
+        isPremium: editPremium,
+      });
+      await refreshSelectedUser(selectedUser.id);
+      alert('Subscription updated');
+    } catch (error) {
+      alert(error.response?.data?.error || 'Failed to update subscription');
+    } finally {
+      setSavingSub(false);
+    }
+  };
+
+  const handleToggleActive = async (userId, nextActive) => {
+    try {
+      await userService.updateUser(userId, { isActive: nextActive });
+      setUsers(users.map((u) => (u.id === userId ? { ...u, isActive: nextActive } : u)));
+      if (selectedUser?.id === userId) {
+        setSelectedUser({ ...selectedUser, isActive: nextActive });
+      }
+    } catch (error) {
+      alert('Failed to update user status');
+    }
+  };
+
+  const planOptions = (() => {
+    const ids = new Set(allPlans.map((p) => p.id));
+    const extras = [];
+    if (editPlanId && !ids.has(editPlanId)) {
+      extras.push({ id: editPlanId, name: editPlanId });
+    }
+    if (!ids.has('free') && !extras.find((p) => p.id === 'free')) {
+      extras.unshift({ id: 'free', name: 'Free' });
+    }
+    return [...allPlans, ...extras];
+  })();
+
+  const usage = selectedUser?.aiUsage || {};
+  const projects = selectedUser?.projects || [];
+
   return (
     <div className="users-page">
       <div className="page-header">
         <h2>Users Management</h2>
         <div className="search-box">
+          <select value={grantPlanId} onChange={(e) => setGrantPlanId(e.target.value)} style={{ padding: '8px', background: '#161616', color: '#F0EBE0', border: '1px solid #333', borderRadius: '6px' }}>
+            {plans.map((plan) => (
+              <option key={plan.id} value={plan.id}>
+                {plan.world ? `[${plan.world}] ` : ''}{plan.name} ({plan.price})
+              </option>
+            ))}
+          </select>
           <input
             type="text"
             placeholder="Search users..."
@@ -123,13 +275,14 @@ const Users = () => {
                 <th>Email</th>
                 <th>Role</th>
                 <th>Status</th>
+                <th>Plan</th>
                 <th>Actions</th>
               </tr>
             </thead>
             <tbody>
               {users.length === 0 ? (
                 <tr>
-                  <td colSpan="5" style={{ textAlign: 'center', padding: '20px' }}>
+                  <td colSpan="7" style={{ textAlign: 'center', padding: '20px' }}>
                     No users found
                   </td>
                 </tr>
@@ -139,8 +292,8 @@ const Users = () => {
                     <td>{user.id}</td>
                     <td>
                       <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-                        <img 
-                          src={getProfilePictureUrl(user, 32)} 
+                        <img
+                          src={getProfilePictureUrl(user, 32)}
                           alt={user.name || 'User'}
                           style={{
                             width: '32px',
@@ -166,27 +319,34 @@ const Users = () => {
                         <input
                           type="checkbox"
                           checked={user.isActive !== false}
-                          onChange={async () => {
-                            const newStatus = user.isActive === false ? true : false;
-                            try {
-                              await userService.updateUser(user.id, { isActive: newStatus });
-                              // Update local state instead of refetching all
-                              setUsers(users.map(u => u.id === user.id ? { ...u, isActive: newStatus } : u));
-                            } catch (e) {
-                              alert("Failed to update user status");
-                            }
-                          }}
+                          onChange={() => handleToggleActive(user.id, user.isActive === false)}
                         />
                         <span className="slider round"></span>
                       </label>
                     </td>
                     <td>
-                      <button className="btn-view" onClick={() => handleView(user.id)}>
-                        View
-                      </button>
-                      <button className="btn-delete" onClick={() => handleDelete(user.id)}>
-                        Delete
-                      </button>
+                      <span style={{ color: user.isPremium ? '#52C07A' : '#909090', fontWeight: 700, fontSize: '12px' }}>
+                        {user.isPremium ? (user.subscriptionPlan || 'PREMIUM') : (user.subscriptionPlan || 'free')}
+                      </span>
+                    </td>
+                    <td>
+                      <div className="action-buttons">
+                        <button className="btn-icon btn-view" onClick={() => handleView(user.id)} title="View">
+                          <Eye size={16} />
+                        </button>
+                        {user.isPremium ? (
+                          <button className="btn-icon btn-revoke" onClick={() => handleRevoke(user.id)} title="Revoke premium">
+                            <UserMinus size={16} />
+                          </button>
+                        ) : (
+                          <button className="btn-icon btn-grant" onClick={() => handleGrant(user.id, grantPlanId)} title="Grant premium">
+                            <UserPlus size={16} />
+                          </button>
+                        )}
+                        <button className="btn-icon btn-delete" onClick={() => handleDelete(user.id)} title="Delete">
+                          <Trash2 size={16} />
+                        </button>
+                      </div>
                     </td>
                   </tr>
                 ))
@@ -198,18 +358,110 @@ const Users = () => {
 
       {showModal && selectedUser && (
         <div className="modal-overlay" onClick={() => setShowModal(false)}>
-          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+          <div className="modal-content user-detail-modal" onClick={(e) => e.stopPropagation()}>
             <div className="modal-header">
               <h3>User Details</h3>
               <button className="close-btn" onClick={() => setShowModal(false)}>×</button>
             </div>
             <div className="modal-body">
-              <p><strong>ID:</strong> {selectedUser.id}</p>
-              <p><strong>Name:</strong> {selectedUser.name || 'N/A'}</p>
-              <p><strong>Email:</strong> {selectedUser.email || 'N/A'}</p>
-              <p><strong>Role:</strong> {selectedUser.role || 'N/A'}</p>
-              <p><strong>Phone:</strong> {selectedUser.phone || 'N/A'}</p>
-              <p><strong>Created:</strong> {selectedUser.createdAt ? new Date(selectedUser.createdAt).toLocaleDateString() : 'N/A'}</p>
+              <div className="detail-grid">
+                <p><strong>ID</strong> {selectedUser.id}</p>
+                <p><strong>Name</strong> {selectedUser.name || 'N/A'}</p>
+                <p><strong>Email</strong> {selectedUser.email || 'N/A'}</p>
+                <p><strong>Role</strong> {selectedUser.role || 'N/A'}</p>
+                <p><strong>Phone</strong> {selectedUser.phone || 'N/A'}</p>
+                <p><strong>Created</strong> {formatDate(selectedUser.createdAt)}</p>
+                <p><strong>Status</strong> {selectedUser.isActive === false ? 'Deactivated' : 'Active'}</p>
+                <p><strong>Source</strong> {selectedUser.subscriptionSource || 'N/A'}</p>
+              </div>
+
+              <h4 className="modal-section-title">Subscription</h4>
+              <div className="subscription-editor">
+                <label>
+                  Plan
+                  <select value={editPlanId} onChange={(e) => setEditPlanId(e.target.value)}>
+                    {planOptions.map((plan) => (
+                      <option key={plan.id} value={plan.id}>
+                        {plan.world ? `[${plan.world}] ` : ''}{plan.name}
+                      </option>
+                    ))}
+                  </select>
+                </label>
+                <label>
+                  Expiry
+                  <input type="date" value={editExpiry} onChange={(e) => setEditExpiry(e.target.value)} />
+                </label>
+                <label className="premium-toggle">
+                  Premium
+                  <input
+                    type="checkbox"
+                    checked={editPremium}
+                    onChange={(e) => setEditPremium(e.target.checked)}
+                  />
+                </label>
+              </div>
+              <div className="modal-actions">
+                <button className="btn-view" onClick={handleSaveSubscription} disabled={savingSub}>
+                  {savingSub ? 'Saving...' : 'Save subscription'}
+                </button>
+                <button className="btn-grant" onClick={() => handleGrant(selectedUser.id, grantPlanId || editPlanId)}>
+                  Grant
+                </button>
+                <button className="btn-revoke" onClick={() => handleRevoke(selectedUser.id)}>
+                  Revoke
+                </button>
+                {selectedUser.isActive === false ? (
+                  <button className="btn-grant" onClick={() => handleToggleActive(selectedUser.id, true)}>
+                    Activate
+                  </button>
+                ) : (
+                  <button className="btn-delete" onClick={() => {
+                    if (window.confirm('Deactivate this account? The user will no longer be able to sign in.')) {
+                      handleToggleActive(selectedUser.id, false);
+                    }
+                  }}>
+                    Deactivate
+                  </button>
+                )}
+              </div>
+
+              <h4 className="modal-section-title">Writing & AI usage</h4>
+              <div className="stats-grid-mini">
+                <div><span>Streak</span><strong>{selectedUser.writingStreak || 0}</strong></div>
+                <div><span>Last write</span><strong>{formatDate(selectedUser.lastWriteDate)}</strong></div>
+                <div><span>Total words</span><strong>{selectedUser.totalWordsWritten || 0}</strong></div>
+                <div><span>Analyzer uses</span><strong>{usage.aiAnalyzerCount || 0}</strong></div>
+                <div><span>Smart Edit uses</span><strong>{usage.smartEditCount || 0}</strong></div>
+                <div><span>AI last used</span><strong>{formatDate(usage.lastUsed)}</strong></div>
+              </div>
+
+              <h4 className="modal-section-title">Projects</h4>
+              {projects.length === 0 ? (
+                <p className="empty-hint">No projects</p>
+              ) : (
+                <table className="projects-mini-table">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Type</th>
+                      <th>Words</th>
+                      <th>Chapters</th>
+                      <th>Updated</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {projects.map((project) => (
+                      <tr key={project.id}>
+                        <td>{project.name}</td>
+                        <td>{project.type || '—'}</td>
+                        <td>{project.wordCount || 0}</td>
+                        <td>{project.chapterCount || 0}</td>
+                        <td>{formatDate(project.updatedAt)}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              )}
             </div>
           </div>
         </div>
@@ -219,4 +471,3 @@ const Users = () => {
 };
 
 export default Users;
-

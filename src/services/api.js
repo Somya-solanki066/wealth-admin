@@ -27,7 +27,15 @@ api.interceptors.request.use(
 api.interceptors.response.use(
   (response) => response,
   (error) => {
-    if (error.response?.status === 401) {
+    const status = error.response?.status;
+    const requestUrl = String(error.config?.url || '');
+    const isLoginRequest = requestUrl.includes('/auth/email-login');
+    const alreadyOnLogin =
+      typeof window !== 'undefined' && window.location.pathname.includes('/login');
+
+    // Never hard-reload on login 401 — that wipes the error message.
+    // Only clear session and send to login for authenticated API calls.
+    if (status === 401 && !isLoginRequest && !alreadyOnLogin) {
       localStorage.removeItem('admin_token');
       localStorage.removeItem('admin_user');
       window.location.href = '/login';

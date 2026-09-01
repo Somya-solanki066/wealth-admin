@@ -12,6 +12,11 @@ import Students from './pages/Students';
 import Teachers from './pages/Teachers';
 import Settings from './pages/Settings';
 import ContentManager from './pages/ContentManager';
+import AiConfig from './pages/AiConfig';
+import Feedback from './pages/Feedback';
+import Projects from './pages/Projects';
+import ActiveWriters from './pages/ActiveWriters';
+import AiUsage from './pages/AiUsage';
 import Layout from './components/Layout';
 import './App.css';
 
@@ -48,6 +53,11 @@ function App() {
         <Route path="/students" element={isAuthenticated ? <Layout><Students /></Layout> : <Navigate to="/login" />} />
         <Route path="/teachers" element={isAuthenticated ? <Layout><Teachers /></Layout> : <Navigate to="/login" />} />
         <Route path="/plan-management" element={isAuthenticated ? <Layout><Settings /></Layout> : <Navigate to="/login" />} />
+        <Route path="/ai-config" element={isAuthenticated ? <Layout><AiConfig /></Layout> : <Navigate to="/login" />} />
+        <Route path="/feedback" element={isAuthenticated ? <Layout><Feedback /></Layout> : <Navigate to="/login" />} />
+        <Route path="/projects" element={isAuthenticated ? <Layout><Projects /></Layout> : <Navigate to="/login" />} />
+        <Route path="/active-writers" element={isAuthenticated ? <Layout><ActiveWriters /></Layout> : <Navigate to="/login" />} />
+        <Route path="/ai-usage" element={isAuthenticated ? <Layout><AiUsage /></Layout> : <Navigate to="/login" />} />
         <Route path="/content-manager" element={isAuthenticated ? <Layout><ContentManager /></Layout> : <Navigate to="/login" />} />
       </Routes>
     </Router>

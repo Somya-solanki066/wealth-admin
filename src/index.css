@@ -9,3 +9,16 @@ body {
   min-width: 320px;
   min-height: 100vh;
 }
+
+/* Hide scrollbars everywhere; scrolling still works */
+* {
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE / old Edge */
+}
+
+*::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+  display: none; /* Chrome, Safari, Edge */
+}
+

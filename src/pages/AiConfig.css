@@ -1,0 +1,143 @@
+.ai-config-page {
+  background: #0f0f0f;
+  padding: 30px;
+  border-radius: 12px;
+  border: 1px solid #242424;
+  color: #F0EBE0;
+}
+
+.ai-config-page .page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.ai-config-page h2 {
+  margin: 0 0 8px;
+  font-family: 'Playfair Display', Georgia, serif;
+  color: #F0EBE0;
+}
+
+.ai-config-page p {
+  margin: 0;
+  color: #909090;
+  max-width: 640px;
+}
+
+.config-section {
+  background: #161616;
+  border: 1px solid #242424;
+  border-radius: 10px;
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+.config-section h3 {
+  margin: 0 0 14px;
+  color: #C9A84C;
+  font-size: 16px;
+}
+
+.section-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.section-head h3 {
+  margin: 0;
+}
+
+.config-section input[type="text"],
+.config-section input:not([type="checkbox"]),
+.config-section select,
+.config-section textarea {
+  width: 100%;
+  padding: 10px 12px;
+  background: #0f0f0f;
+  border: 1px solid #333;
+  border-radius: 6px;
+  color: #F0EBE0;
+  font-size: 14px;
+}
+
+.config-section textarea {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 12px;
+  line-height: 1.5;
+  resize: vertical;
+}
+
+.catalog-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 12px;
+}
+
+.catalog-table th,
+.catalog-table td {
+  text-align: left;
+  padding: 8px;
+  border-bottom: 1px solid #242424;
+}
+
+.catalog-table th {
+  color: #C9A84C;
+  font-size: 11px;
+  text-transform: uppercase;
+}
+
+.add-row {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.add-row input {
+  max-width: 220px;
+}
+
+.add-row button,
+.save-btn {
+  padding: 10px 16px;
+  background: linear-gradient(135deg, #E2C06A 0%, #7A5E1E 100%);
+  color: #080808;
+  border: none;
+  border-radius: 6px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.danger-btn {
+  background: rgba(224, 82, 82, 0.12);
+  border: 1px solid rgba(224, 82, 82, 0.3);
+  color: #E05252;
+  padding: 6px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 12px;
+}
+
+.status-banner {
+  margin-bottom: 16px;
+  padding: 10px 14px;
+  border-radius: 8px;
+  background: rgba(201, 168, 76, 0.12);
+  border: 1px solid rgba(201, 168, 76, 0.3);
+  color: #C9A84C;
+}
+
+.field-label {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 12px;
+  font-size: 11px;
+  text-transform: uppercase;
+  color: #909090;
+  max-width: 320px;
+}

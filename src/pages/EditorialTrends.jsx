@@ -1,6 +1,19 @@
 import { useState, useEffect } from 'react';
 import { trendsService } from '../services/trendsService';
+import { catalogService } from '../services/catalogService';
 import './EditorialTrends.css';
+
+const FALLBACK_PLATFORMS = [
+  'GoodNovel',
+  'PocketFM',
+  'Dreame',
+  'MegaNovel',
+  'WebNovel',
+  'AlphaNovel',
+  'Letterlux',
+  'Stary',
+  'NovelSnack'
+];
 
 const EditorialTrends = () => {
   const [platform, setPlatform] = useState('GoodNovel');
@@ -10,18 +23,25 @@ const EditorialTrends = () => {
   const [policyChanges, setPolicyChanges] = useState('');
   const [loading, setLoading] = useState(false);
   const [saving, setSaving] = useState(false);
+  const [platforms, setPlatforms] = useState(FALLBACK_PLATFORMS);
 
-  const platforms = [
-    'GoodNovel',
-    'PocketFM',
-    'Dreame',
-    'MegaNovel',
-    'WebNovel',
-    'AlphaNovel',
-    'Letterlux',
-    'Stary',
-    'NovelSnack'
-  ];
+  useEffect(() => {
+    const loadPlatforms = async () => {
+      try {
+        const response = await catalogService.getAiConfig();
+        const names = (response.data?.platforms || [])
+          .map((item) => item.id || item.name)
+          .filter(Boolean);
+        if (names.length) {
+          setPlatforms(names);
+          setPlatform((current) => (names.includes(current) ? current : names[0]));
+        }
+      } catch (error) {
+        console.error('Failed to load catalog platforms:', error);
+      }
+    };
+    loadPlatforms();
+  }, []);
 
   useEffect(() => {
     loadTrends();

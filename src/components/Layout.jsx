@@ -10,7 +10,12 @@ import {
   MdSchool, 
   MdPerson,
   MdSettings,
-  MdLogout
+  MdLogout,
+  MdAutoAwesome,
+  MdFeedback,
+  MdFolder,
+  MdEdit,
+  MdQueryStats
 } from 'react-icons/md';
 import './Layout.css';
 
@@ -28,8 +33,13 @@ const Layout = ({ children }) => {
     { path: '/dashboard', label: 'Dashboard', icon: MdDashboard },
     { path: '/content-manager', label: 'Content Editor', icon: MdArticle },
     { path: '/users', label: 'Users', icon: MdPeople },
+    { path: '/projects', label: 'Projects', icon: MdFolder },
+    { path: '/active-writers', label: 'Active Writers', icon: MdEdit },
     { path: '/premium-users', label: 'Premium Details', icon: MdSettings },
     { path: '/editorial-trends', label: 'Editorial Trends', icon: MdArticle },
+    { path: '/ai-config', label: 'AI Config', icon: MdAutoAwesome },
+    { path: '/ai-usage', label: 'AI Usage', icon: MdQueryStats },
+    { path: '/feedback', label: 'AI Feedback', icon: MdFeedback },
     { path: '/plan-management', label: 'Plan Management', icon: MdSettings },
   ];
 

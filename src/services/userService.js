@@ -39,5 +39,10 @@ export const userService = {
     const response = await api.get('/data/admin');
     return response.data;
   },
+
+  setSubscription: async (id, payload) => {
+    const response = await api.post(`/data/users/${id}/subscription`, payload);
+    return response.data;
+  },
 };
 

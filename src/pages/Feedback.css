@@ -1,0 +1,258 @@
+.feedback-page {
+  background: #0f0f0f;
+  padding: 30px;
+  border-radius: 12px;
+  border: 1px solid #242424;
+  color: #F0EBE0;
+}
+
+.feedback-page .page-header {
+  margin-bottom: 24px;
+}
+
+.feedback-page .page-header h2 {
+  margin: 0 0 8px;
+  color: #F0EBE0;
+  font-family: 'Playfair Display', Georgia, serif;
+}
+
+.page-subtitle {
+  margin: 0;
+  color: #909090;
+  font-size: 14px;
+}
+
+.feedback-tabs {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+}
+
+.feedback-tab {
+  padding: 10px 18px;
+  border-radius: 8px;
+  border: 1px solid #242424;
+  background: #161616;
+  color: #909090;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.feedback-tab:hover {
+  color: #F0EBE0;
+  border-color: #404040;
+}
+
+.feedback-tab.active {
+  background: rgba(201, 168, 76, 0.12);
+  border-color: #C9A84C;
+  color: #C9A84C;
+}
+
+.feedback-section {
+  background: #161616;
+  border: 1px solid #242424;
+  border-radius: 12px;
+  padding: 24px;
+}
+
+.feedback-section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.feedback-section-header h3 {
+  margin: 0 0 6px;
+  color: #F0EBE0;
+  font-family: 'Playfair Display', Georgia, serif;
+}
+
+.feedback-section-header p {
+  margin: 0;
+  color: #909090;
+  font-size: 13px;
+}
+
+.refresh-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 14px;
+  border-radius: 8px;
+  border: 1px solid #242424;
+  background: #0f0f0f;
+  color: #C9A84C;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.refresh-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.feedback-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.stat-card {
+  background: #0f0f0f;
+  border: 1px solid #242424;
+  border-radius: 10px;
+  padding: 14px;
+}
+
+.stat-card strong {
+  display: block;
+  margin-top: 6px;
+  font-size: 24px;
+  color: #F0EBE0;
+}
+
+.stat-label {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #909090;
+  font-weight: 700;
+}
+
+.stat-yes strong {
+  color: #52C07A;
+}
+
+.stat-partial strong {
+  color: #C9A84C;
+}
+
+.stat-no strong {
+  color: #E05252;
+}
+
+.feedback-empty {
+  text-align: center;
+  padding: 40px 16px;
+  color: #909090;
+  border: 1px dashed #242424;
+  border-radius: 10px;
+}
+
+.feedback-list {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.feedback-card {
+  background: #0f0f0f;
+  border: 1px solid #242424;
+  border-radius: 10px;
+  padding: 16px;
+}
+
+.feedback-card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.feedback-user strong {
+  display: block;
+  color: #F0EBE0;
+  margin-bottom: 4px;
+}
+
+.feedback-user span {
+  color: #606060;
+  font-size: 12px;
+}
+
+.rating-badge {
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.rating-yes {
+  background: rgba(82, 192, 122, 0.12);
+  color: #52C07A;
+  border: 1px solid rgba(82, 192, 122, 0.25);
+}
+
+.rating-partial {
+  background: rgba(201, 168, 76, 0.12);
+  color: #C9A84C;
+  border: 1px solid rgba(201, 168, 76, 0.25);
+}
+
+.rating-no {
+  background: rgba(224, 82, 82, 0.12);
+  color: #E05252;
+  border: 1px solid rgba(224, 82, 82, 0.25);
+}
+
+.feedback-message {
+  margin: 0;
+  color: #CFC7B8;
+  line-height: 1.6;
+  white-space: pre-wrap;
+}
+
+.context-toggle {
+  margin-top: 12px;
+  padding: 0;
+  border: none;
+  background: none;
+  color: #C9A84C;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.feedback-context {
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px solid #242424;
+  display: grid;
+  gap: 8px;
+}
+
+.context-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  font-size: 12px;
+}
+
+.context-row span {
+  color: #606060;
+  text-transform: capitalize;
+}
+
+.context-row strong {
+  color: #909090;
+  text-align: right;
+  word-break: break-word;
+}
+
+@media (max-width: 768px) {
+  .feedback-page {
+    padding: 20px;
+  }
+
+  .feedback-section-header {
+    flex-direction: column;
+  }
+}

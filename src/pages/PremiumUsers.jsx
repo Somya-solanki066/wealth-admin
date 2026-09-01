@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { UserMinus } from 'lucide-react';
 import { userService } from '../services/userService';
 import { getProfilePictureUrl } from '../utils/imageHelper';
 import './Users.css';
@@ -16,7 +17,7 @@ const PremiumUsers = () => {
   }, [page]);
 
   const filterPremium = (data) => {
-    return (data || []).filter(u => u.subscriptionPlan && u.subscriptionPlan !== 'free');
+    return (data || []).filter((u) => u.isPremium);
   };
 
   const fetchUsers = async () => {
@@ -124,12 +125,13 @@ const PremiumUsers = () => {
                 <th>Plan</th>
                 <th>Purchased On</th>
                 <th>Plan Expiry</th>
+                <th>Actions</th>
               </tr>
             </thead>
             <tbody>
               {users.length === 0 ? (
                 <tr>
-                  <td colSpan="5" style={{ textAlign: 'center', padding: '20px' }}>
+                  <td colSpan="6" style={{ textAlign: 'center', padding: '20px' }}>
                     No users found
                   </td>
                 </tr>
@@ -162,6 +164,25 @@ const PremiumUsers = () => {
                     </td>
                     <td>{user.subscriptionDate ? new Date(user.subscriptionDate).toLocaleDateString() : '-'}</td>
                     <td>{user.subscriptionExpiry ? new Date(user.subscriptionExpiry).toLocaleDateString() : '-'}</td>
+                    <td>
+                      <div className="action-buttons">
+                        <button
+                          className="btn-icon btn-revoke"
+                          title="Revoke premium"
+                          onClick={async () => {
+                            if (!window.confirm('Revoke premium for this user?')) return;
+                            try {
+                              await userService.setSubscription(user.id, { action: 'revoke' });
+                              fetchUsers();
+                            } catch (error) {
+                              alert(error.response?.data?.error || 'Failed to revoke premium');
+                            }
+                          }}
+                        >
+                          <UserMinus size={16} />
+                        </button>
+                      </div>
+                    </td>
                   </tr>
                 ))
               )}

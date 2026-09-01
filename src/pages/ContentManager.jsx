@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
-import { getApiUrl } from "../config/api";
+import api from "../services/api";
 import "./ContentManager.css";
 
 const AVAILABLE_PAGES = [
@@ -94,8 +93,6 @@ export default function ContentManager() {
   // New Key state
   const [newKeyName, setNewKeyName] = useState("");
 
-  const API_URL = getApiUrl();
-
   useEffect(() => {
     fetchContent();
   }, [selectedPage]);
@@ -104,7 +101,7 @@ export default function ContentManager() {
     setIsLoading(true);
     setMessage({ text: "", type: "" });
     try {
-      const response = await axios.get(`${API_URL}/content/${selectedPage}`);
+      const response = await api.get(`/content/${selectedPage}`);
       const fetchedContent = response.data.data || {};
       
       // If DB is empty, use default fields so admin knows what they can edit
@@ -133,7 +130,7 @@ export default function ContentManager() {
     setIsSaving(true);
     setMessage({ text: "", type: "" });
     try {
-      await axios.put(`${API_URL}/content/${selectedPage}`, {
+      await api.put(`/content/${selectedPage}`, {
         content: content
       });
       setMessage({ text: "Content saved successfully!", type: "success" });
