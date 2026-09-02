@@ -256,6 +256,20 @@
   }
 }
 
+@media (max-width: 768px) {
+  .dashboard-header {
+    padding: 24px;
+  }
+
+  .dashboard-header h1 {
+    font-size: 24px;
+  }
+
+  .stats-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
 .loading {
   text-align: center;
   padding: 60px;

@@ -1,0 +1,504 @@
+/* Global admin mobile containment */
+html,
+body,
+#root {
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+.admin-layout {
+  max-width: 100vw;
+  overflow-x: hidden;
+}
+
+/* Shared page shells */
+.settings-container,
+.content-manager-container,
+.admin-data-page,
+.feedback-page,
+.ai-config-page,
+.users-page,
+.dashboard {
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+.settings-container h2,
+.content-manager-container h2,
+.admin-data-page h2,
+.feedback-page h2,
+.ai-config-page h2,
+.users-page h2 {
+  font-size: clamp(1.25rem, 4vw, 1.75rem);
+  line-height: 1.25;
+  word-break: break-word;
+}
+
+.admin-data-page h3,
+.writer-card h3 {
+  font-size: clamp(1rem, 3.5vw, 1.25rem);
+  word-break: break-word;
+}
+
+.page-subtitle,
+.section-desc {
+  font-size: 13px;
+  line-height: 1.5;
+  word-break: break-word;
+}
+
+/* Tables */
+.table-wrap,
+.catalog-table-wrap {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.data-table,
+.users-table,
+.catalog-table,
+.projects-mini-table {
+  width: 100%;
+  min-width: 0;
+}
+
+/* Inputs & buttons — never overflow parent */
+input,
+select,
+textarea,
+button {
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+@media (max-width: 1024px) {
+  .dashboard-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+    padding: 20px;
+  }
+
+  .dashboard-header h1 {
+    font-size: 1.5rem;
+  }
+
+  .stats-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .stat-card-content {
+    padding: 18px;
+    gap: 14px;
+  }
+
+  .stat-number {
+    font-size: 28px;
+  }
+
+  .action-buttons {
+    flex-direction: column;
+  }
+
+  .action-btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .ops-tables {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .content-area {
+    padding: 12px !important;
+  }
+
+  .users-page,
+  .admin-data-page,
+  .feedback-page,
+  .ai-config-page,
+  .settings-container,
+  .content-manager-container,
+  .dashboard {
+    padding: 14px !important;
+    border-radius: 10px;
+  }
+
+  .settings-section,
+  .content-manager-section,
+  .config-section,
+  .feedback-section,
+  .plan-card,
+  .writer-card,
+  .log-card {
+    padding: 14px !important;
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+
+  .page-header,
+  .admin-data-page .page-header,
+  .ai-config-page .page-header,
+  .feedback-section-header {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+  }
+
+  .refresh-btn,
+  .add-plan-btn,
+  .save-btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .section-header-flex {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+  }
+
+  .section-header-flex .add-plan-btn {
+    width: 100%;
+  }
+
+  .world-plan-tabs {
+    width: 100%;
+    max-width: 100%;
+    flex-wrap: wrap;
+    box-sizing: border-box;
+  }
+
+  .world-plan-tab {
+    flex: 1 1 calc(33.333% - 8px);
+    justify-content: center;
+    min-width: 0;
+    font-size: 11px;
+    padding: 8px 10px;
+  }
+
+  .limits-grid,
+  .plans-grid,
+  .editor-grid,
+  .flag-grid,
+  .stats-grid-mini,
+  .detail-grid,
+  .subscription-editor,
+  .meta-lines,
+  .feedback-stats {
+    grid-template-columns: 1fr !important;
+    gap: 10px;
+  }
+
+  .writer-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .writer-top,
+  .log-top,
+  .chapter-top,
+  .feedback-card-top {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .activity-badge,
+  .rating-badge {
+    align-self: flex-start;
+    white-space: normal;
+    max-width: 100%;
+  }
+
+  .feedback-user strong,
+  .muted,
+  .writer-top .muted {
+    word-break: break-all;
+    overflow-wrap: anywhere;
+  }
+
+  .feedback-message {
+    word-break: break-word;
+    overflow-wrap: anywhere;
+  }
+
+  .selector-section {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+  }
+
+  .page-select {
+    min-width: 0 !important;
+    width: 100% !important;
+  }
+
+  .form-group-header {
+    flex-wrap: wrap;
+    gap: 8px;
+    align-items: flex-start;
+  }
+
+  .form-group-header label {
+    flex: 1 1 auto;
+    min-width: 0;
+    word-break: break-all;
+  }
+
+  .delete-key-btn {
+    flex-shrink: 0;
+  }
+
+  .add-key-inputs {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+  }
+
+  .add-key-inputs input {
+    max-width: none !important;
+    width: 100%;
+  }
+
+  .add-btn,
+  .content-manager-container .save-btn,
+  .settings-container .save-btn,
+  .ai-config-page .save-btn {
+    width: 100%;
+    align-self: stretch;
+  }
+
+  .form-group input,
+  .form-group-content input,
+  .form-group-content textarea,
+  .config-section input[type="text"],
+  .config-section input:not([type="checkbox"]),
+  .config-section select,
+  .config-section textarea,
+  .editor-grid input,
+  .feature-input {
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+
+  .field-label {
+    max-width: none;
+  }
+
+  .add-row {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .add-row input {
+    max-width: none !important;
+    width: 100%;
+  }
+
+  .add-row button {
+    width: 100%;
+  }
+
+  /* Catalog tables → stacked cards on mobile */
+  .catalog-table thead {
+    display: none;
+  }
+
+  .catalog-table,
+  .catalog-table tbody,
+  .catalog-table tr,
+  .catalog-table td {
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .catalog-table tr {
+    margin-bottom: 12px;
+    padding: 10px;
+    border: 1px solid #242424;
+    border-radius: 10px;
+    background: #0f0f0f;
+  }
+
+  .catalog-table td {
+    border: none;
+    padding: 6px 0;
+  }
+
+  .catalog-table td:last-child {
+    padding-top: 10px;
+  }
+
+  .catalog-table td input[type="text"] {
+    width: 100%;
+  }
+
+  .danger-btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .plan-card-preview {
+    padding: 18px;
+    min-width: 0;
+  }
+
+  .plan-badge {
+    position: static;
+    display: inline-block;
+    margin-bottom: 10px;
+    max-width: 100%;
+    white-space: normal;
+    word-break: break-word;
+  }
+
+  .price-preview {
+    font-size: 1.75rem;
+  }
+
+  .feature-edit-row {
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .feature-input {
+    min-width: 0;
+    flex: 1 1 100%;
+  }
+
+  .editor-header {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+  }
+
+  .section-head {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+  }
+
+  .section-head .save-btn {
+    width: 100%;
+  }
+
+  .editor-actions {
+    flex-wrap: wrap;
+    width: 100%;
+  }
+
+  .features-header {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+  }
+
+  .search-box {
+    width: 100%;
+    flex-direction: column;
+  }
+
+  .search-box input {
+    min-width: 0;
+    width: 100%;
+  }
+
+  .search-box button {
+    width: 100%;
+  }
+
+  .toolbar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .toolbar input {
+    min-width: 0;
+    width: 100%;
+  }
+
+  .feedback-tabs {
+    flex-direction: column;
+  }
+
+  .feedback-tab {
+    width: 100%;
+    text-align: center;
+  }
+
+  .context-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+  }
+
+  .context-row strong {
+    text-align: left;
+  }
+
+  .modal-content,
+  .modal-card,
+  .user-detail-modal {
+    width: 100%;
+    max-width: none;
+    margin: 0;
+    border-radius: 12px;
+    padding: 16px;
+  }
+
+  .modal-backdrop,
+  .modal-overlay {
+    padding: 12px;
+    align-items: flex-end;
+  }
+
+  .login-card {
+    padding: 24px 16px;
+    margin: 12px;
+    max-width: none;
+  }
+
+  .data-table th,
+  .data-table td,
+  .users-table th,
+  .users-table td,
+  .ops-table-card th,
+  .ops-table-card td {
+    padding: 8px 6px;
+    font-size: 12px;
+  }
+
+  .top-header h1 {
+    font-size: 1.1rem;
+  }
+
+  .top-header-sub {
+    font-size: 11px;
+  }
+}
+
+@media (max-width: 480px) {
+  .dashboard-header h1 {
+    font-size: 1.35rem;
+  }
+
+  .stat-icon-wrapper {
+    width: 48px;
+    height: 48px;
+  }
+
+  .world-plan-tab {
+    flex: 1 1 100%;
+  }
+
+  .stat-card-content {
+    flex-direction: column;
+    text-align: center;
+  }
+}

@@ -384,6 +384,22 @@
   border: 1px solid #242424;
 }
 
+@media (max-width: 768px) {
+  .users-page {
+    padding: 16px;
+  }
+
+  .page-header {
+    align-items: stretch;
+  }
+
+  .users-table th,
+  .users-table td {
+    padding: 10px 8px;
+    font-size: 12px;
+  }
+}
+
 
 /* Toggle Switch Styles */
 .switch {

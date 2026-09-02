@@ -93,6 +93,14 @@
   cursor: not-allowed;
 }
 
+@media (max-width: 768px) {
+  .login-card {
+    padding: 28px 20px;
+    margin: 16px;
+    max-width: none;
+  }
+}
+
 .error-message {
   padding: 12px;
   background: rgba(224, 82, 82, 0.1);

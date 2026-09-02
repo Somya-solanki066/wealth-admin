@@ -1,13 +1,12 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { authService } from '../services/authService';
-import { 
-  MdDashboard, 
-  MdPeople, 
-  MdArticle, 
-  MdBusiness, 
-  MdNotifications, 
-  MdSchool, 
+import {
+  MdDashboard,
+  MdPeople,
+  MdArticle,
+  MdNotifications,
+  MdSchool,
   MdPerson,
   MdSettings,
   MdLogout,
@@ -15,7 +14,9 @@ import {
   MdFeedback,
   MdFolder,
   MdEdit,
-  MdQueryStats
+  MdQueryStats,
+  MdMenu,
+  MdClose,
 } from 'react-icons/md';
 import './Layout.css';
 
@@ -23,6 +24,7 @@ const Layout = ({ children }) => {
   const navigate = useNavigate();
   const location = useLocation();
   const [sidebarOpen, setSidebarOpen] = useState(true);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const handleLogout = async () => {
     await authService.logout();
@@ -43,14 +45,54 @@ const Layout = ({ children }) => {
     { path: '/plan-management', label: 'Plan Management', icon: MdSettings },
   ];
 
+  const currentPage =
+    menuItems.find((item) => item.path === location.pathname)?.label || 'Admin Panel';
+
+  const closeMobileMenu = () => setMobileMenuOpen(false);
+
+  useEffect(() => {
+    closeMobileMenu();
+  }, [location.pathname]);
+
+  useEffect(() => {
+    if (!mobileMenuOpen) return;
+    document.body.style.overflow = 'hidden';
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [mobileMenuOpen]);
+
   return (
     <div className="admin-layout">
-      {/* Sidebar */}
-      <aside className={`sidebar ${sidebarOpen ? 'open' : 'closed'}`}>
+      {mobileMenuOpen && (
+        <button
+          type="button"
+          className="sidebar-backdrop"
+          onClick={closeMobileMenu}
+          aria-label="Close menu"
+        />
+      )}
+
+      <aside
+        className={`sidebar ${sidebarOpen ? 'open' : 'closed'} ${mobileMenuOpen ? 'mobile-open' : ''}`}
+      >
         <div className="sidebar-header">
           <h2>Ink2Wealth Admin</h2>
-          <button className="toggle-btn" onClick={() => setSidebarOpen(!sidebarOpen)}>
+          <button
+            type="button"
+            className="toggle-btn desktop-only"
+            onClick={() => setSidebarOpen(!sidebarOpen)}
+            aria-label={sidebarOpen ? 'Collapse sidebar' : 'Expand sidebar'}
+          >
             {sidebarOpen ? '←' : '→'}
+          </button>
+          <button
+            type="button"
+            className="mobile-close-btn"
+            onClick={closeMobileMenu}
+            aria-label="Close menu"
+          >
+            <MdClose size={22} />
           </button>
         </div>
         <nav className="sidebar-nav">
@@ -61,11 +103,12 @@ const Layout = ({ children }) => {
                 key={item.path}
                 to={item.path}
                 className={`nav-item ${location.pathname === item.path ? 'active' : ''}`}
+                onClick={closeMobileMenu}
               >
                 <span className="nav-icon">
                   <IconComponent size={20} />
                 </span>
-                {sidebarOpen && <span className="nav-label">{item.label}</span>}
+                <span className="nav-label">{item.label}</span>
               </Link>
             );
           })}
@@ -75,15 +118,27 @@ const Layout = ({ children }) => {
             <span className="nav-icon">
               <MdLogout size={20} />
             </span>
-            {sidebarOpen && <span>Logout</span>}
+            <span className="nav-label">Logout</span>
           </button>
         </div>
       </aside>
 
-      {/* Main Content */}
       <main className="main-content">
         <header className="top-header">
-          <h1>Admin Panel</h1>
+          <div className="top-header-left">
+            <button
+              type="button"
+              className="mobile-menu-btn"
+              onClick={() => setMobileMenuOpen(true)}
+              aria-label="Open menu"
+            >
+              <MdMenu size={22} />
+            </button>
+            <div>
+              <h1>Admin Panel</h1>
+              <p className="top-header-sub">{currentPage}</p>
+            </div>
+          </div>
         </header>
         <div className="content-area">
           {children}
@@ -94,4 +149,3 @@ const Layout = ({ children }) => {
 };
 
 export default Layout;
-

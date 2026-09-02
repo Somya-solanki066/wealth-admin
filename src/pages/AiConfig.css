@@ -4,6 +4,8 @@
   border-radius: 12px;
   border: 1px solid #242424;
   color: #F0EBE0;
+  max-width: 100%;
+  box-sizing: border-box;
 }
 
 .ai-config-page .page-header {
@@ -32,6 +34,9 @@
   border-radius: 10px;
   padding: 20px;
   margin-bottom: 20px;
+  max-width: 100%;
+  box-sizing: border-box;
+  min-width: 0;
 }
 
 .config-section h3 {
@@ -72,10 +77,18 @@
   resize: vertical;
 }
 
+.catalog-table-wrap {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
 .catalog-table {
   width: 100%;
   border-collapse: collapse;
   margin-bottom: 12px;
+  min-width: 0;
 }
 
 .catalog-table th,

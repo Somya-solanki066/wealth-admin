@@ -159,6 +159,7 @@ const AiConfig = () => {
 
       <section className="config-section">
         <h3>Platforms</h3>
+        <div className="catalog-table-wrap">
         <table className="catalog-table">
           <thead>
             <tr>
@@ -194,6 +195,7 @@ const AiConfig = () => {
             ))}
           </tbody>
         </table>
+        </div>
         <div className="add-row">
           <input placeholder="id" value={newPlatformId} onChange={(e) => setNewPlatformId(e.target.value)} />
           <input placeholder="name" value={newPlatformName} onChange={(e) => setNewPlatformName(e.target.value)} />
@@ -208,6 +210,7 @@ const AiConfig = () => {
 
       <section className="config-section">
         <h3>Genres</h3>
+        <div className="catalog-table-wrap">
         <table className="catalog-table">
           <thead>
             <tr>
@@ -243,6 +246,7 @@ const AiConfig = () => {
             ))}
           </tbody>
         </table>
+        </div>
         <div className="add-row">
           <input placeholder="id" value={newGenreId} onChange={(e) => setNewGenreId(e.target.value)} />
           <input placeholder="name" value={newGenreName} onChange={(e) => setNewGenreName(e.target.value)} />

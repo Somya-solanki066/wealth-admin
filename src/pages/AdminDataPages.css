@@ -4,6 +4,8 @@
   border-radius: 12px;
   border: 1px solid #242424;
   color: #F0EBE0;
+  max-width: 100%;
+  box-sizing: border-box;
 }
 
 .admin-data-page .page-header {
@@ -239,7 +241,7 @@
 
 .writer-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr));
   gap: 16px;
 }
 
@@ -249,6 +251,9 @@
   border: 1px solid #242424;
   border-radius: 12px;
   padding: 16px;
+  max-width: 100%;
+  box-sizing: border-box;
+  min-width: 0;
 }
 
 .writer-top,
@@ -261,6 +266,12 @@
 
 .writer-top h3 {
   margin: 0 0 4px;
+  word-break: break-word;
+}
+
+.writer-top .muted {
+  word-break: break-all;
+  overflow-wrap: anywhere;
 }
 
 .activity-badge {
@@ -289,7 +300,7 @@
 
 .meta-lines {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 120px), 1fr));
   gap: 8px;
   margin-bottom: 14px;
 }

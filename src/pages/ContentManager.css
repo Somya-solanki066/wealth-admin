@@ -3,6 +3,8 @@
   background: #080808;
   border-radius: 12px;
   color: #F0EBE0;
+  max-width: 100%;
+  box-sizing: border-box;
 }
 
 .content-manager-container h2 {
@@ -76,6 +78,9 @@
   border-radius: 8px;
   border: 1px solid #242424;
   transition: border-color 0.2s;
+  max-width: 100%;
+  box-sizing: border-box;
+  min-width: 0;
 }
 
 .form-group-content:focus-within {
@@ -118,6 +123,8 @@
 .form-group-content input,
 .form-group-content textarea {
   width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
   padding: 12px 15px;
   background: #080808;
   border: 1px solid #242424;
@@ -155,11 +162,14 @@
 .add-key-inputs {
   display: flex;
   gap: 15px;
+  flex-wrap: wrap;
+  align-items: stretch;
 }
 
 .add-key-inputs input {
-  flex: 1;
-  max-width: 300px;
+  flex: 1 1 200px;
+  min-width: 0;
+  max-width: 100%;
   padding: 10px 15px;
   background: #161616;
   border: 1px solid #242424;
