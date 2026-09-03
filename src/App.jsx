@@ -17,6 +17,10 @@ import Feedback from './pages/Feedback';
 import Projects from './pages/Projects';
 import ActiveWriters from './pages/ActiveWriters';
 import AiUsage from './pages/AiUsage';
+import LandingCourses from './pages/LandingCourses';
+import WorldCourses from './pages/WorldCourses';
+import WealthJobs from './pages/WealthJobs';
+import WealthOpenCalls from './pages/WealthOpenCalls';
 import Layout from './components/Layout';
 import './App.css';
 
@@ -59,6 +63,10 @@ function App() {
         <Route path="/active-writers" element={isAuthenticated ? <Layout><ActiveWriters /></Layout> : <Navigate to="/login" />} />
         <Route path="/ai-usage" element={isAuthenticated ? <Layout><AiUsage /></Layout> : <Navigate to="/login" />} />
         <Route path="/content-manager" element={isAuthenticated ? <Layout><ContentManager /></Layout> : <Navigate to="/login" />} />
+        <Route path="/landing-courses" element={isAuthenticated ? <Layout><LandingCourses /></Layout> : <Navigate to="/login" />} />
+        <Route path="/world-courses" element={isAuthenticated ? <Layout><WorldCourses /></Layout> : <Navigate to="/login" />} />
+        <Route path="/wealth-jobs" element={isAuthenticated ? <Layout><WealthJobs /></Layout> : <Navigate to="/login" />} />
+        <Route path="/wealth-open-calls" element={isAuthenticated ? <Layout><WealthOpenCalls /></Layout> : <Navigate to="/login" />} />
       </Routes>
     </Router>
   );

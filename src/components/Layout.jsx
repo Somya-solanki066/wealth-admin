@@ -17,6 +17,9 @@ import {
   MdQueryStats,
   MdMenu,
   MdClose,
+  MdMenuBook,
+  MdWork,
+  MdMovieFilter,
 } from 'react-icons/md';
 import './Layout.css';
 
@@ -34,6 +37,10 @@ const Layout = ({ children }) => {
   const menuItems = [
     { path: '/dashboard', label: 'Dashboard', icon: MdDashboard },
     { path: '/content-manager', label: 'Content Editor', icon: MdArticle },
+    { path: '/landing-courses', label: 'Landing Page Courses', icon: MdSchool },
+    { path: '/world-courses', label: 'Courses', icon: MdMenuBook },
+    { path: '/wealth-jobs', label: 'WEALTH Jobs', icon: MdWork },
+    { path: '/wealth-open-calls', label: 'Open Calls', icon: MdMovieFilter },
     { path: '/users', label: 'Users', icon: MdPeople },
     { path: '/projects', label: 'Projects', icon: MdFolder },
     { path: '/active-writers', label: 'Active Writers', icon: MdEdit },
