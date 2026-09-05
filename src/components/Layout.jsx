@@ -39,6 +39,7 @@ const Layout = ({ children }) => {
     { path: '/content-manager', label: 'Content Editor', icon: MdArticle },
     { path: '/landing-courses', label: 'Landing Page Courses', icon: MdSchool },
     { path: '/world-courses', label: 'Courses', icon: MdMenuBook },
+    { path: '/course-enrollments', label: 'Course Enrollments', icon: MdSchool },
     { path: '/wealth-jobs', label: 'WEALTH Jobs', icon: MdWork },
     { path: '/wealth-open-calls', label: 'Open Calls', icon: MdMovieFilter },
     { path: '/users', label: 'Users', icon: MdPeople },

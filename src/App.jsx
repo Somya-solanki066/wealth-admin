@@ -21,6 +21,7 @@ import LandingCourses from './pages/LandingCourses';
 import WorldCourses from './pages/WorldCourses';
 import WealthJobs from './pages/WealthJobs';
 import WealthOpenCalls from './pages/WealthOpenCalls';
+import CourseEnrollments from './pages/CourseEnrollments';
 import Layout from './components/Layout';
 import './App.css';
 
@@ -65,6 +66,7 @@ function App() {
         <Route path="/content-manager" element={isAuthenticated ? <Layout><ContentManager /></Layout> : <Navigate to="/login" />} />
         <Route path="/landing-courses" element={isAuthenticated ? <Layout><LandingCourses /></Layout> : <Navigate to="/login" />} />
         <Route path="/world-courses" element={isAuthenticated ? <Layout><WorldCourses /></Layout> : <Navigate to="/login" />} />
+        <Route path="/course-enrollments" element={isAuthenticated ? <Layout><CourseEnrollments /></Layout> : <Navigate to="/login" />} />
         <Route path="/wealth-jobs" element={isAuthenticated ? <Layout><WealthJobs /></Layout> : <Navigate to="/login" />} />
         <Route path="/wealth-open-calls" element={isAuthenticated ? <Layout><WealthOpenCalls /></Layout> : <Navigate to="/login" />} />
       </Routes>
