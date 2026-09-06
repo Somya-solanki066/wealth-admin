@@ -6,6 +6,7 @@ import './AdminDataPages.css';
 const TABS = [
   { id: 'all', label: 'All' },
   { id: 'chapter-analyzer', label: 'Chapter Analyzer' },
+  { id: 'script-analyzer', label: 'Script Analyzer' },
   { id: 'smart-edit', label: 'Smart Edit' },
 ];
 
@@ -23,6 +24,7 @@ export default function AiUsage() {
     totalUsers: 0,
     analyzerCalls: 0,
     smartEditCalls: 0,
+    scriptAnalyzerCalls: 0,
     totalTokens: 0,
     totalWords: 0,
     loggedCalls: 0,
@@ -70,6 +72,7 @@ export default function AiUsage() {
       <div className="stats-row">
         <div><span>Users with AI use</span><strong>{summary.totalUsers || 0}</strong></div>
         <div><span>Analyzer calls</span><strong>{summary.analyzerCalls || 0}</strong></div>
+        <div><span>Script Analyzer</span><strong>{summary.scriptAnalyzerCalls || 0}</strong></div>
         <div><span>Smart Edit calls</span><strong>{summary.smartEditCalls || 0}</strong></div>
         <div><span>Total tokens</span><strong>{Number(summary.totalTokens || 0).toLocaleString()}</strong></div>
         <div><span>Words analyzed</span><strong>{Number(summary.totalWords || 0).toLocaleString()}</strong></div>
@@ -102,6 +105,7 @@ export default function AiUsage() {
                   <tr>
                     <th>User</th>
                     <th>Analyzer</th>
+                    <th>Script</th>
                     <th>Smart Edit</th>
                     <th>Total calls</th>
                     <th>Tokens</th>
@@ -117,6 +121,7 @@ export default function AiUsage() {
                         <div className="muted">{user.userEmail}</div>
                       </td>
                       <td>{user.aiAnalyzerCount}</td>
+                      <td>{user.scriptAnalyzerCount || 0}</td>
                       <td>{user.smartEditCount}</td>
                       <td>{user.totalCalls}</td>
                       <td>{Number(user.totalTokensUsed || 0).toLocaleString()}</td>
@@ -146,8 +151,12 @@ export default function AiUsage() {
                       <strong>{log.userName}</strong>
                       <div className="muted">{log.userEmail}</div>
                     </div>
-                    <span className={`type-badge type-${log.tool === 'chapter-analyzer' ? 'novel' : 'script'}`}>
-                      {log.tool === 'chapter-analyzer' ? 'Chapter Analyzer' : 'Smart Edit'}
+                    <span className={`type-badge type-${log.tool === 'chapter-analyzer' ? 'novel' : log.tool === 'script-analyzer' ? 'script' : 'script'}`}>
+                      {log.tool === 'chapter-analyzer'
+                        ? 'Chapter Analyzer'
+                        : log.tool === 'script-analyzer'
+                          ? 'Script Analyzer'
+                          : 'Smart Edit'}
                     </span>
                   </div>
 
@@ -164,6 +173,13 @@ export default function AiUsage() {
                       <div><span>Chapter</span><strong>{log.chapterTitle || '—'}</strong></div>
                       <div><span>Platform</span><strong>{log.platform || '—'}</strong></div>
                       <div><span>Genre</span><strong>{log.genre || '—'}</strong></div>
+                    </div>
+                  ) : log.tool === 'script-analyzer' ? (
+                    <div className="meta-lines">
+                      <div><span>Project</span><strong>{log.projectName || '—'}</strong></div>
+                      <div><span>Scene</span><strong>{log.chapterTitle || '—'}</strong></div>
+                      <div><span>Industry</span><strong>{log.platform || '—'}</strong></div>
+                      <div><span>Format</span><strong>{log.genre || '—'}</strong></div>
                     </div>
                   ) : (
                     <div className="meta-lines">

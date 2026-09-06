@@ -48,6 +48,7 @@ const Layout = ({ children }) => {
     { path: '/premium-users', label: 'Premium Details', icon: MdSettings },
     { path: '/editorial-trends', label: 'Editorial Trends', icon: MdArticle },
     { path: '/ai-config', label: 'AI Config', icon: MdAutoAwesome },
+    { path: '/script-analyzer', label: 'Script Analyzer', icon: MdMovieFilter },
     { path: '/ai-usage', label: 'AI Usage', icon: MdQueryStats },
     { path: '/feedback', label: 'AI Feedback', icon: MdFeedback },
     { path: '/plan-management', label: 'Plan Management', icon: MdSettings },

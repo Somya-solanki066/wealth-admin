@@ -13,6 +13,7 @@ import Teachers from './pages/Teachers';
 import Settings from './pages/Settings';
 import ContentManager from './pages/ContentManager';
 import AiConfig from './pages/AiConfig';
+import ScriptAnalyzer from './pages/ScriptAnalyzer';
 import Feedback from './pages/Feedback';
 import Projects from './pages/Projects';
 import ActiveWriters from './pages/ActiveWriters';
@@ -59,6 +60,7 @@ function App() {
         <Route path="/teachers" element={isAuthenticated ? <Layout><Teachers /></Layout> : <Navigate to="/login" />} />
         <Route path="/plan-management" element={isAuthenticated ? <Layout><Settings /></Layout> : <Navigate to="/login" />} />
         <Route path="/ai-config" element={isAuthenticated ? <Layout><AiConfig /></Layout> : <Navigate to="/login" />} />
+        <Route path="/script-analyzer" element={isAuthenticated ? <Layout><ScriptAnalyzer /></Layout> : <Navigate to="/login" />} />
         <Route path="/feedback" element={isAuthenticated ? <Layout><Feedback /></Layout> : <Navigate to="/login" />} />
         <Route path="/projects" element={isAuthenticated ? <Layout><Projects /></Layout> : <Navigate to="/login" />} />
         <Route path="/active-writers" element={isAuthenticated ? <Layout><ActiveWriters /></Layout> : <Navigate to="/login" />} />
