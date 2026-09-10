@@ -24,6 +24,12 @@ import {
   MdMovie,
   MdStorefront,
   MdGroups,
+  MdCalculate,
+  MdOutgoingMail,
+  MdBolt,
+  MdLock,
+  MdAccountBalanceWallet,
+  MdBadge,
 } from 'react-icons/md';
 import './Layout.css';
 
@@ -56,6 +62,13 @@ const Layout = ({ children }) => {
     { path: '/short-films', label: 'Short Films', icon: MdMovie },
     { path: '/script-marketplace', label: 'Script Marketplace', icon: MdStorefront },
     { path: '/community', label: 'Community', icon: MdGroups },
+    { path: '/rate-calculator', label: 'Rate Calculator', icon: MdCalculate },
+    { path: '/pitch-templates', label: 'Pitch Templates', icon: MdOutgoingMail },
+    { path: '/flash-prompts', label: 'Flash Prompts', icon: MdBolt },
+    { path: '/portfolio-settings', label: 'Portfolios', icon: MdWork },
+    { path: '/screenwriter-portfolios', label: 'SW Portfolios', icon: MdBadge },
+    { path: '/token-gates', label: 'Token Gates', icon: MdLock },
+    { path: '/wallet-royalties', label: 'Wallet Royalties', icon: MdAccountBalanceWallet },
     { path: '/script-analyzer', label: 'Script Analyzer', icon: MdMovieFilter },
     { path: '/ai-usage', label: 'AI Usage', icon: MdQueryStats },
     { path: '/feedback', label: 'AI Feedback', icon: MdFeedback },

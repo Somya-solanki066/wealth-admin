@@ -23,6 +23,13 @@ import WritingVault from './pages/WritingVault';
 import ShortFilms from './pages/ShortFilms';
 import ScriptMarketplace from './pages/ScriptMarketplace';
 import Community from './pages/Community';
+import RateCalculator from './pages/RateCalculator';
+import PitchTemplates from './pages/PitchTemplates';
+import FlashPrompts from './pages/FlashPrompts';
+import PortfolioSettings from './pages/PortfolioSettings';
+import ScreenwriterPortfolios from './pages/ScreenwriterPortfolios';
+import TokenGates from './pages/TokenGates';
+import WalletRoyaltiesSettings from './pages/WalletRoyaltiesSettings';
 import WorldCourses from './pages/WorldCourses';
 import WealthJobs from './pages/WealthJobs';
 import WealthOpenCalls from './pages/WealthOpenCalls';
@@ -75,6 +82,13 @@ function App() {
         <Route path="/short-films" element={isAuthenticated ? <Layout><ShortFilms /></Layout> : <Navigate to="/login" />} />
         <Route path="/script-marketplace" element={isAuthenticated ? <Layout><ScriptMarketplace /></Layout> : <Navigate to="/login" />} />
         <Route path="/community" element={isAuthenticated ? <Layout><Community /></Layout> : <Navigate to="/login" />} />
+        <Route path="/rate-calculator" element={isAuthenticated ? <Layout><RateCalculator /></Layout> : <Navigate to="/login" />} />
+        <Route path="/pitch-templates" element={isAuthenticated ? <Layout><PitchTemplates /></Layout> : <Navigate to="/login" />} />
+        <Route path="/flash-prompts" element={isAuthenticated ? <Layout><FlashPrompts /></Layout> : <Navigate to="/login" />} />
+        <Route path="/portfolio-settings" element={isAuthenticated ? <Layout><PortfolioSettings /></Layout> : <Navigate to="/login" />} />
+        <Route path="/screenwriter-portfolios" element={isAuthenticated ? <Layout><ScreenwriterPortfolios /></Layout> : <Navigate to="/login" />} />
+        <Route path="/token-gates" element={isAuthenticated ? <Layout><TokenGates /></Layout> : <Navigate to="/login" />} />
+        <Route path="/wallet-royalties" element={isAuthenticated ? <Layout><WalletRoyaltiesSettings /></Layout> : <Navigate to="/login" />} />
         <Route path="/world-courses" element={isAuthenticated ? <Layout><WorldCourses /></Layout> : <Navigate to="/login" />} />
         <Route path="/course-enrollments" element={isAuthenticated ? <Layout><CourseEnrollments /></Layout> : <Navigate to="/login" />} />
         <Route path="/wealth-jobs" element={isAuthenticated ? <Layout><WealthJobs /></Layout> : <Navigate to="/login" />} />
