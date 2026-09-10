@@ -154,3 +154,266 @@
   color: #909090;
   max-width: 320px;
 }
+
+/* Shared moderation / vault UI (Short Films, Writing Vault, Marketplace, Community) */
+.ai-config-page .btn-primary,
+.ai-config-page .btn-secondary,
+.ai-config-page .btn-link {
+  font-family: inherit;
+  cursor: pointer;
+  transition: opacity 0.15s ease, border-color 0.15s ease, background 0.15s ease;
+}
+
+.ai-config-page .btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 16px;
+  border: none;
+  border-radius: 8px;
+  background: linear-gradient(135deg, #e2c06a 0%, #7a5e1e 100%);
+  color: #080808;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.ai-config-page .btn-primary:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.ai-config-page .btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 16px;
+  border-radius: 8px;
+  border: 1px solid #333;
+  background: #161616;
+  color: #c9a84c;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.ai-config-page .btn-secondary:hover {
+  border-color: #c9a84c;
+}
+
+.ai-config-page .btn-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  margin-right: 10px;
+  padding: 0;
+  border: none;
+  background: none;
+  color: #c9a84c;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.ai-config-page .btn-link.danger {
+  color: #e05252;
+}
+
+.ai-config-page .success-banner,
+.ai-config-page .error-banner {
+  margin-bottom: 16px;
+  padding: 10px 14px;
+  border-radius: 8px;
+  font-size: 13px;
+}
+
+.ai-config-page .success-banner {
+  background: rgba(82, 192, 122, 0.12);
+  border: 1px solid rgba(82, 192, 122, 0.3);
+  color: #52c07a;
+}
+
+.ai-config-page .error-banner {
+  background: rgba(224, 82, 82, 0.12);
+  border: 1px solid rgba(224, 82, 82, 0.3);
+  color: #e05252;
+}
+
+.ai-config-page .config-card,
+.ai-config-page .config-section {
+  background: #161616;
+  border: 1px solid #242424;
+  border-radius: 10px;
+  padding: 20px;
+  margin-bottom: 20px;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+.ai-config-page .config-card h3 {
+  margin: 0 0 16px;
+  color: #c9a84c;
+  font-size: 16px;
+}
+
+.ai-config-page .filters-row {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.ai-config-page .form-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 180px), 1fr));
+  gap: 14px 16px;
+  margin-bottom: 16px;
+}
+
+.ai-config-page .form-grid > label,
+.ai-config-page .config-card > label,
+.ai-config-page .field-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: #909090;
+}
+
+.ai-config-page .form-grid > label.checkbox-row,
+.ai-config-page label.checkbox-row {
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+  text-transform: none;
+  font-size: 13px;
+  color: #f0ebe0;
+  padding-top: 22px;
+}
+
+.ai-config-page .form-grid input,
+.ai-config-page .form-grid select,
+.ai-config-page .form-grid textarea,
+.ai-config-page .config-card input:not([type='checkbox']),
+.ai-config-page .config-card select,
+.ai-config-page .config-card textarea,
+.ai-config-page .filters-row select,
+.ai-config-page .filters-row input,
+.ai-config-page .reject-field input {
+  width: 100%;
+  padding: 10px 12px;
+  background: #0f0f0f;
+  border: 1px solid #333;
+  border-radius: 8px;
+  color: #f0ebe0;
+  font-size: 14px;
+  box-sizing: border-box;
+  font-family: inherit;
+}
+
+.ai-config-page .config-card textarea {
+  resize: vertical;
+  min-height: 96px;
+  text-transform: none;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.ai-config-page .form-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 16px;
+}
+
+.ai-config-page .reject-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  max-width: 420px;
+  margin-bottom: 16px;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: #909090;
+}
+
+.ai-config-page .table-wrap {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  border: 1px solid #242424;
+  border-radius: 10px;
+  background: #0f0f0f;
+}
+
+.ai-config-page .data-table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 640px;
+}
+
+.ai-config-page .data-table th {
+  text-align: left;
+  padding: 12px 14px;
+  color: #c9a84c;
+  border-bottom: 1px solid #242424;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  background: #121212;
+}
+
+.ai-config-page .data-table td {
+  padding: 12px 14px;
+  border-bottom: 1px solid #1a1a1a;
+  vertical-align: top;
+  font-size: 13px;
+  color: #f0ebe0;
+}
+
+.ai-config-page .data-table tr:last-child td {
+  border-bottom: none;
+}
+
+.ai-config-page .empty-state,
+.ai-config-page .loading-state {
+  padding: 28px 16px;
+  text-align: center;
+  color: #909090;
+  border: 1px dashed #242424;
+  border-radius: 10px;
+  background: #121212;
+}
+
+.ai-config-page .tab-chip {
+  display: inline-flex;
+  align-items: center;
+  padding: 9px 16px;
+  border-radius: 8px;
+  border: 1px solid #333;
+  background: #161616;
+  color: #909090;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.ai-config-page .tab-chip.active {
+  background: rgba(201, 168, 76, 0.14);
+  border-color: #c9a84c;
+  color: #c9a84c;
+}
+
+@media (max-width: 768px) {
+  .ai-config-page {
+    padding: 20px;
+  }
+
+  .ai-config-page .form-grid > label.checkbox-row {
+    padding-top: 0;
+  }
+}
+

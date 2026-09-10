@@ -19,6 +19,10 @@ import Projects from './pages/Projects';
 import ActiveWriters from './pages/ActiveWriters';
 import AiUsage from './pages/AiUsage';
 import LandingCourses from './pages/LandingCourses';
+import WritingVault from './pages/WritingVault';
+import ShortFilms from './pages/ShortFilms';
+import ScriptMarketplace from './pages/ScriptMarketplace';
+import Community from './pages/Community';
 import WorldCourses from './pages/WorldCourses';
 import WealthJobs from './pages/WealthJobs';
 import WealthOpenCalls from './pages/WealthOpenCalls';
@@ -67,6 +71,10 @@ function App() {
         <Route path="/ai-usage" element={isAuthenticated ? <Layout><AiUsage /></Layout> : <Navigate to="/login" />} />
         <Route path="/content-manager" element={isAuthenticated ? <Layout><ContentManager /></Layout> : <Navigate to="/login" />} />
         <Route path="/landing-courses" element={isAuthenticated ? <Layout><LandingCourses /></Layout> : <Navigate to="/login" />} />
+        <Route path="/writing-vault" element={isAuthenticated ? <Layout><WritingVault /></Layout> : <Navigate to="/login" />} />
+        <Route path="/short-films" element={isAuthenticated ? <Layout><ShortFilms /></Layout> : <Navigate to="/login" />} />
+        <Route path="/script-marketplace" element={isAuthenticated ? <Layout><ScriptMarketplace /></Layout> : <Navigate to="/login" />} />
+        <Route path="/community" element={isAuthenticated ? <Layout><Community /></Layout> : <Navigate to="/login" />} />
         <Route path="/world-courses" element={isAuthenticated ? <Layout><WorldCourses /></Layout> : <Navigate to="/login" />} />
         <Route path="/course-enrollments" element={isAuthenticated ? <Layout><CourseEnrollments /></Layout> : <Navigate to="/login" />} />
         <Route path="/wealth-jobs" element={isAuthenticated ? <Layout><WealthJobs /></Layout> : <Navigate to="/login" />} />

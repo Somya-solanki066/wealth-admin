@@ -20,6 +20,10 @@ import {
   MdMenuBook,
   MdWork,
   MdMovieFilter,
+  MdLightbulb,
+  MdMovie,
+  MdStorefront,
+  MdGroups,
 } from 'react-icons/md';
 import './Layout.css';
 
@@ -48,6 +52,10 @@ const Layout = ({ children }) => {
     { path: '/premium-users', label: 'Premium Details', icon: MdSettings },
     { path: '/editorial-trends', label: 'Editorial Trends', icon: MdArticle },
     { path: '/ai-config', label: 'AI Config', icon: MdAutoAwesome },
+    { path: '/writing-vault', label: 'Writing Vault', icon: MdLightbulb },
+    { path: '/short-films', label: 'Short Films', icon: MdMovie },
+    { path: '/script-marketplace', label: 'Script Marketplace', icon: MdStorefront },
+    { path: '/community', label: 'Community', icon: MdGroups },
     { path: '/script-analyzer', label: 'Script Analyzer', icon: MdMovieFilter },
     { path: '/ai-usage', label: 'AI Usage', icon: MdQueryStats },
     { path: '/feedback', label: 'AI Feedback', icon: MdFeedback },
