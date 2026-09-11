@@ -17,14 +17,11 @@ export function resolveMediaUrl(url) {
   if (/^https?:\/\//i.test(value)) {
     try {
       const parsed = new URL(value);
-      if (parsed.pathname.startsWith('/uploads/')) {
-        parsed.protocol = 'https:';
-        return parsed.toString();
-      }
+      parsed.protocol = 'https:';
+      return parsed.toString();
     } catch {
       return value;
     }
-    return value;
   }
 
   const origin = getApiOrigin();

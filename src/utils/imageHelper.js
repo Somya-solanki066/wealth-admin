@@ -14,18 +14,15 @@ export const getImageUrl = (imagePath) => {
     path = `https://${path.slice(7)}`;
   }
 
-  // Already a full URL
+  // Already a full URL (incl. Firebase Storage)
   if (/^https?:\/\//i.test(path)) {
     try {
       const parsed = new URL(path);
-      if (parsed.pathname.startsWith('/uploads/')) {
-        parsed.protocol = 'https:';
-        return parsed.toString();
-      }
+      parsed.protocol = 'https:';
+      return parsed.toString();
     } catch {
       return path;
     }
-    return path;
   }
 
   // Relative path - add base URL (HTTPS when admin is HTTPS)
