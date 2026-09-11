@@ -14,6 +14,12 @@ const EMPTY_COURSE = {
   title: '',
   bannerEmoji: '',
   bannerGradient: '',
+  bannerImageUrl: '',
+  myStudentBannerImageUrl: '',
+  myStudentBannerHeading: 'My Students',
+  myStudentBannerSubtext:
+    'A growing community of writers learning, shipping, and building wealth with their words.',
+  myStudentBannerYoutubeUrl: '',
   kicker: '',
   courseName: '',
   description: '',
@@ -56,6 +62,8 @@ export default function LandingCourses() {
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [uploading, setUploading] = useState(false);
+  const [uploadingThumb, setUploadingThumb] = useState(false);
+  const [uploadingStudentBanner, setUploadingStudentBanner] = useState(false);
   const [message, setMessage] = useState({ text: '', type: '' });
   const [tagsText, setTagsText] = useState('');
 
@@ -180,6 +188,60 @@ export default function LandingCourses() {
     }
   };
 
+  const handleThumbnailUpload = async (e) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    setUploadingThumb(true);
+    try {
+      const formData = new FormData();
+      formData.append('thumbnail', file);
+      const res = await api.post(`/landing-courses/${selectedId}/thumbnail`, formData, {
+        headers: { 'Content-Type': 'multipart/form-data' },
+      });
+      const url = res.data?.bannerImageUrl || res.data?.thumbnailUrl || '';
+      if (url) updateField('bannerImageUrl', url);
+      showMessage('Course thumbnail uploaded.');
+    } catch (err) {
+      console.error(err);
+      showMessage(err.response?.data?.error || 'Thumbnail upload failed.', 'error');
+    } finally {
+      setUploadingThumb(false);
+      e.target.value = '';
+    }
+  };
+
+  const clearThumbnail = () => {
+    updateField('bannerImageUrl', '');
+    showMessage('Thumbnail cleared. Click Save Course to keep this change.');
+  };
+
+  const handleMyStudentBannerUpload = async (e) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    setUploadingStudentBanner(true);
+    try {
+      const formData = new FormData();
+      formData.append('banner', file);
+      const res = await api.post(`/landing-courses/${selectedId}/my-student-banner`, formData, {
+        headers: { 'Content-Type': 'multipart/form-data' },
+      });
+      const url = res.data?.myStudentBannerImageUrl || '';
+      if (url) updateField('myStudentBannerImageUrl', url);
+      showMessage('My Student banner uploaded live.');
+    } catch (err) {
+      console.error(err);
+      showMessage(err.response?.data?.error || 'My Student banner upload failed.', 'error');
+    } finally {
+      setUploadingStudentBanner(false);
+      e.target.value = '';
+    }
+  };
+
+  const clearMyStudentBanner = () => {
+    updateField('myStudentBannerImageUrl', '');
+    showMessage('My Student banner cleared. Click Save Course to keep this change.');
+  };
+
   return (
     <div className="landing-courses-page">
       <div className="lc-header">
@@ -221,6 +283,51 @@ export default function LandingCourses() {
         <div className="lc-panels">
           <section className="lc-panel">
             <h3>Course Card</h3>
+            <div className="lc-coach-photo lc-thumb-block">
+              <div
+                className="lc-photo-preview lc-thumb-preview"
+                style={
+                  !course.bannerImageUrl && course.bannerGradient
+                    ? { background: course.bannerGradient }
+                    : undefined
+                }
+              >
+                {course.bannerImageUrl ? (
+                  <img src={resolvePhotoUrl(course.bannerImageUrl)} alt="Course thumbnail" />
+                ) : (
+                  <span>{course.bannerEmoji || '🎬'}</span>
+                )}
+              </div>
+              <div className="lc-photo-actions">
+                <label className="lc-upload-btn">
+                  <MdCloudUpload size={16} />
+                  {uploadingThumb ? 'Uploading...' : 'Upload course thumbnail'}
+                  <input
+                    type="file"
+                    accept="image/jpeg,image/png,image/webp"
+                    hidden
+                    onChange={handleThumbnailUpload}
+                    disabled={uploadingThumb}
+                  />
+                </label>
+                <label>
+                  Thumbnail URL (optional)
+                  <input
+                    value={course.bannerImageUrl || ''}
+                    onChange={(e) => updateField('bannerImageUrl', e.target.value)}
+                    placeholder="https://... or /uploads/..."
+                  />
+                </label>
+                {course.bannerImageUrl ? (
+                  <button type="button" className="lc-clear-thumb" onClick={clearThumbnail}>
+                    Remove thumbnail (use emoji)
+                  </button>
+                ) : null}
+                <p className="lc-hint">
+                  JPEG / PNG / WEBP · max 5 MB. Shows on the landing page course card banner.
+                </p>
+              </div>
+            </div>
             <div className="lc-grid">
               <label>
                 Section label
@@ -231,11 +338,11 @@ export default function LandingCourses() {
                 <input value={course.title || ''} onChange={(e) => updateField('title', e.target.value)} />
               </label>
               <label>
-                Banner emoji
+                Banner emoji (fallback)
                 <input value={course.bannerEmoji || ''} onChange={(e) => updateField('bannerEmoji', e.target.value)} />
               </label>
               <label>
-                Banner gradient (CSS)
+                Banner gradient (CSS fallback)
                 <input value={course.bannerGradient || ''} onChange={(e) => updateField('bannerGradient', e.target.value)} />
               </label>
               <label>
@@ -334,6 +441,79 @@ export default function LandingCourses() {
                   </button>
                 </div>
               ))}
+            </div>
+          </section>
+
+          <section className="lc-panel">
+            <h3>My Student Banner</h3>
+            <p className="lc-hint" style={{ marginBottom: 12 }}>
+              Shows after this course card and just before Your Coach — on main landing and matching
+              world course stacks when saved there too.
+            </p>
+            <div className="lc-grid" style={{ marginBottom: 14 }}>
+              <label>
+                Banner heading
+                <input
+                  value={course.myStudentBannerHeading || ''}
+                  onChange={(e) => updateField('myStudentBannerHeading', e.target.value)}
+                  placeholder="My Students"
+                />
+              </label>
+              <label className="lc-full">
+                Banner subtext
+                <input
+                  value={course.myStudentBannerSubtext || ''}
+                  onChange={(e) => updateField('myStudentBannerSubtext', e.target.value)}
+                  placeholder="Short line under the heading"
+                />
+              </label>
+              <label className="lc-full">
+                YouTube video link
+                <input
+                  value={course.myStudentBannerYoutubeUrl || ''}
+                  onChange={(e) => updateField('myStudentBannerYoutubeUrl', e.target.value)}
+                  placeholder="https://www.youtube.com/watch?v=..."
+                />
+              </label>
+            </div>
+            <div className="lc-coach-photo lc-thumb-block">
+              <div className="lc-photo-preview lc-thumb-preview lc-student-banner-preview">
+                {course.myStudentBannerImageUrl ? (
+                  <img
+                    src={resolvePhotoUrl(course.myStudentBannerImageUrl)}
+                    alt="My Student banner"
+                  />
+                ) : (
+                  <span>🎓</span>
+                )}
+              </div>
+              <div className="lc-photo-actions">
+                <label className="lc-upload-btn">
+                  <MdCloudUpload size={16} />
+                  {uploadingStudentBanner ? 'Uploading...' : 'Upload My Student banner'}
+                  <input
+                    type="file"
+                    accept="image/jpeg,image/png,image/webp"
+                    hidden
+                    onChange={handleMyStudentBannerUpload}
+                    disabled={uploadingStudentBanner}
+                  />
+                </label>
+                <label>
+                  Banner URL (optional)
+                  <input
+                    value={course.myStudentBannerImageUrl || ''}
+                    onChange={(e) => updateField('myStudentBannerImageUrl', e.target.value)}
+                    placeholder="https://... or /uploads/..."
+                  />
+                </label>
+                {course.myStudentBannerImageUrl ? (
+                  <button type="button" className="lc-clear-thumb" onClick={clearMyStudentBanner}>
+                    Remove banner
+                  </button>
+                ) : null}
+                <p className="lc-hint">JPEG / PNG / WEBP · max 5 MB · upload saves live</p>
+              </div>
             </div>
           </section>
 

@@ -19,6 +19,7 @@ import Projects from './pages/Projects';
 import ActiveWriters from './pages/ActiveWriters';
 import AiUsage from './pages/AiUsage';
 import LandingCourses from './pages/LandingCourses';
+import CoachPage from './pages/CoachPage';
 import WritingVault from './pages/WritingVault';
 import ShortFilms from './pages/ShortFilms';
 import ScriptMarketplace from './pages/ScriptMarketplace';
@@ -78,6 +79,7 @@ function App() {
         <Route path="/ai-usage" element={isAuthenticated ? <Layout><AiUsage /></Layout> : <Navigate to="/login" />} />
         <Route path="/content-manager" element={isAuthenticated ? <Layout><ContentManager /></Layout> : <Navigate to="/login" />} />
         <Route path="/landing-courses" element={isAuthenticated ? <Layout><LandingCourses /></Layout> : <Navigate to="/login" />} />
+        <Route path="/coach-page" element={isAuthenticated ? <Layout><CoachPage /></Layout> : <Navigate to="/login" />} />
         <Route path="/writing-vault" element={isAuthenticated ? <Layout><WritingVault /></Layout> : <Navigate to="/login" />} />
         <Route path="/short-films" element={isAuthenticated ? <Layout><ShortFilms /></Layout> : <Navigate to="/login" />} />
         <Route path="/script-marketplace" element={isAuthenticated ? <Layout><ScriptMarketplace /></Layout> : <Navigate to="/login" />} />

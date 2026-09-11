@@ -17,6 +17,12 @@ const EMPTY_COURSE = {
   title: 'New Course',
   bannerEmoji: '📖',
   bannerGradient: 'linear-gradient(135deg,#1a1200,#2e2000)',
+  bannerImageUrl: '',
+  myStudentBannerImageUrl: '',
+  myStudentBannerHeading: 'My Students',
+  myStudentBannerSubtext:
+    'A growing community of writers learning, shipping, and building wealth with their words.',
+  myStudentBannerYoutubeUrl: '',
   kicker: 'New Course',
   courseName: 'Course Name',
   description: '',
@@ -76,6 +82,8 @@ export default function WorldCourses() {
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [uploading, setUploading] = useState(false);
+  const [uploadingThumb, setUploadingThumb] = useState(false);
+  const [uploadingStudentBanner, setUploadingStudentBanner] = useState(false);
   const [message, setMessage] = useState({ text: '', type: '' });
   const [tagsText, setTagsText] = useState('');
 
@@ -279,6 +287,84 @@ export default function WorldCourses() {
     }
   };
 
+  const handleThumbnailUpload = async (e) => {
+    const file = e.target.files?.[0];
+    if (!file || !course) return;
+    setUploadingThumb(true);
+    try {
+      const formData = new FormData();
+      formData.append('thumbnail', file);
+      const res = await api.post(
+        `/world-courses/${worldId}/courses/${course.id}/thumbnail`,
+        formData,
+        { headers: { 'Content-Type': 'multipart/form-data' } }
+      );
+      const url = res.data?.bannerImageUrl || res.data?.thumbnailUrl || '';
+      if (url) updateCourseField('bannerImageUrl', url);
+      showMessage('Course thumbnail uploaded live.');
+    } catch (err) {
+      console.error(err);
+      showMessage(err.response?.data?.error || 'Thumbnail upload failed.', 'error');
+    } finally {
+      setUploadingThumb(false);
+      e.target.value = '';
+    }
+  };
+
+  const clearThumbnail = async () => {
+    if (!course) return;
+    const nextCourses = courses.map((c) =>
+      c.id === course.id ? { ...c, bannerImageUrl: '' } : c
+    );
+    setCourses(nextCourses);
+    try {
+      await api.put(`/world-courses/${worldId}`, { page: { courses: nextCourses } });
+      showMessage('Thumbnail removed.');
+    } catch (err) {
+      console.error(err);
+      showMessage('Thumbnail cleared locally — click Save Courses to persist.', 'error');
+    }
+  };
+
+  const handleMyStudentBannerUpload = async (e) => {
+    const file = e.target.files?.[0];
+    if (!file || !course) return;
+    setUploadingStudentBanner(true);
+    try {
+      const formData = new FormData();
+      formData.append('banner', file);
+      const res = await api.post(
+        `/world-courses/${worldId}/courses/${course.id}/my-student-banner`,
+        formData,
+        { headers: { 'Content-Type': 'multipart/form-data' } }
+      );
+      const url = res.data?.myStudentBannerImageUrl || '';
+      if (url) updateCourseField('myStudentBannerImageUrl', url);
+      showMessage('My Student banner uploaded live.');
+    } catch (err) {
+      console.error(err);
+      showMessage(err.response?.data?.error || 'My Student banner upload failed.', 'error');
+    } finally {
+      setUploadingStudentBanner(false);
+      e.target.value = '';
+    }
+  };
+
+  const clearMyStudentBanner = async () => {
+    if (!course) return;
+    const nextCourses = courses.map((c) =>
+      c.id === course.id ? { ...c, myStudentBannerImageUrl: '' } : c
+    );
+    setCourses(nextCourses);
+    try {
+      await api.put(`/world-courses/${worldId}`, { page: { courses: nextCourses } });
+      showMessage('My Student banner removed.');
+    } catch (err) {
+      console.error(err);
+      showMessage('Banner cleared locally — click Save Courses to persist.', 'error');
+    }
+  };
+
   return (
     <div className="landing-courses-page world-courses-page">
       <div className="lc-header">
@@ -352,6 +438,51 @@ export default function WorldCourses() {
           <div className="lc-panels">
             <section className="lc-panel">
               <h3>Course Card</h3>
+              <div className="lc-coach-photo lc-thumb-block">
+                <div
+                  className="lc-photo-preview lc-thumb-preview"
+                  style={
+                    !course.bannerImageUrl && course.bannerGradient
+                      ? { background: course.bannerGradient }
+                      : undefined
+                  }
+                >
+                  {course.bannerImageUrl ? (
+                    <img src={resolvePhotoUrl(course.bannerImageUrl)} alt="Course thumbnail" />
+                  ) : (
+                    <span>{course.bannerEmoji || '🎬'}</span>
+                  )}
+                </div>
+                <div className="lc-photo-actions">
+                  <label className="lc-upload-btn">
+                    <MdCloudUpload size={16} />
+                    {uploadingThumb ? 'Uploading...' : 'Upload course thumbnail'}
+                    <input
+                      type="file"
+                      accept="image/jpeg,image/png,image/webp"
+                      hidden
+                      onChange={handleThumbnailUpload}
+                      disabled={uploadingThumb}
+                    />
+                  </label>
+                  <label>
+                    Thumbnail URL (optional)
+                    <input
+                      value={course.bannerImageUrl || ''}
+                      onChange={(e) => updateCourseField('bannerImageUrl', e.target.value)}
+                      placeholder="https://... or /uploads/..."
+                    />
+                  </label>
+                  {course.bannerImageUrl ? (
+                    <button type="button" className="lc-clear-thumb" onClick={() => void clearThumbnail()}>
+                      Remove thumbnail (use emoji)
+                    </button>
+                  ) : null}
+                  <p className="lc-hint">
+                    JPEG / PNG / WEBP · max 5 MB. Upload saves live on the course card banner.
+                  </p>
+                </div>
+              </div>
               <div className="lc-grid">
                 <label>
                   Section label
@@ -362,11 +493,11 @@ export default function WorldCourses() {
                   <input value={course.title || ''} onChange={(e) => updateCourseField('title', e.target.value)} />
                 </label>
                 <label>
-                  Banner emoji
+                  Banner emoji (fallback)
                   <input value={course.bannerEmoji || ''} onChange={(e) => updateCourseField('bannerEmoji', e.target.value)} />
                 </label>
                 <label>
-                  Banner gradient (CSS)
+                  Banner gradient (CSS fallback)
                   <input value={course.bannerGradient || ''} onChange={(e) => updateCourseField('bannerGradient', e.target.value)} />
                 </label>
                 <label>
@@ -465,6 +596,83 @@ export default function WorldCourses() {
                     </button>
                   </div>
                 ))}
+              </div>
+            </section>
+
+            <section className="lc-panel">
+              <h3>My Student Banner</h3>
+              <p className="lc-hint" style={{ marginBottom: 12 }}>
+                Shows after this course and just before Your Coach on this world&apos;s landing and
+                courses pages.
+              </p>
+              <div className="lc-grid" style={{ marginBottom: 14 }}>
+                <label>
+                  Banner heading
+                  <input
+                    value={course.myStudentBannerHeading || ''}
+                    onChange={(e) => updateCourseField('myStudentBannerHeading', e.target.value)}
+                    placeholder="My Students"
+                  />
+                </label>
+                <label className="lc-full">
+                  Banner subtext
+                  <input
+                    value={course.myStudentBannerSubtext || ''}
+                    onChange={(e) => updateCourseField('myStudentBannerSubtext', e.target.value)}
+                    placeholder="Short line under the heading"
+                  />
+                </label>
+                <label className="lc-full">
+                  YouTube video link
+                  <input
+                    value={course.myStudentBannerYoutubeUrl || ''}
+                    onChange={(e) => updateCourseField('myStudentBannerYoutubeUrl', e.target.value)}
+                    placeholder="https://www.youtube.com/watch?v=..."
+                  />
+                </label>
+              </div>
+              <div className="lc-coach-photo lc-thumb-block">
+                <div className="lc-photo-preview lc-thumb-preview lc-student-banner-preview">
+                  {course.myStudentBannerImageUrl ? (
+                    <img
+                      src={resolvePhotoUrl(course.myStudentBannerImageUrl)}
+                      alt="My Student banner"
+                    />
+                  ) : (
+                    <span>🎓</span>
+                  )}
+                </div>
+                <div className="lc-photo-actions">
+                  <label className="lc-upload-btn">
+                    <MdCloudUpload size={16} />
+                    {uploadingStudentBanner ? 'Uploading...' : 'Upload My Student banner'}
+                    <input
+                      type="file"
+                      accept="image/jpeg,image/png,image/webp"
+                      hidden
+                      onChange={handleMyStudentBannerUpload}
+                      disabled={uploadingStudentBanner}
+                    />
+                  </label>
+                  <label>
+                    Banner URL (optional)
+                    <input
+                      value={course.myStudentBannerImageUrl || ''}
+                      onChange={(e) => updateCourseField('myStudentBannerImageUrl', e.target.value)}
+                      placeholder="https://... or /uploads/..."
+                    />
+                  </label>
+                  {course.myStudentBannerImageUrl ? (
+                    <button
+                      type="button"
+                      className="lc-clear-thumb"
+                      onClick={() => void clearMyStudentBanner()}
+                    >
+                      Remove banner
+                    </button>
+                  ) : null}
+                  <p className="lc-hint">JPEG / PNG / WEBP · max 5 MB · upload saves live</p>
+                </div>
               </div>
             </section>
 
