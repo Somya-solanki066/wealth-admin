@@ -1,21 +1,36 @@
 import { getApiOrigin } from '../config/api';
 
-const API_BASE_URL = getApiOrigin();
-
 /**
  * Get full image URL from relative path
  */
 export const getImageUrl = (imagePath) => {
   if (!imagePath) return null;
-  
-  // Already a full URL
-  if (imagePath.startsWith('http://') || imagePath.startsWith('https://')) {
-    return imagePath;
+
+  let path = String(imagePath).trim();
+  if (!path) return null;
+
+  // Upgrade mixed-content http URLs
+  if (/^http:\/\//i.test(path)) {
+    path = `https://${path.slice(7)}`;
   }
-  
-  // Relative path - add base URL
-  const cleanPath = imagePath.startsWith('/') ? imagePath : `/${imagePath}`;
-  return `${API_BASE_URL}${cleanPath}`;
+
+  // Already a full URL
+  if (/^https?:\/\//i.test(path)) {
+    try {
+      const parsed = new URL(path);
+      if (parsed.pathname.startsWith('/uploads/')) {
+        parsed.protocol = 'https:';
+        return parsed.toString();
+      }
+    } catch {
+      return path;
+    }
+    return path;
+  }
+
+  // Relative path - add base URL (HTTPS when admin is HTTPS)
+  const cleanPath = path.startsWith('/') ? path : `/${path}`;
+  return `${getApiOrigin()}${cleanPath}`;
 };
 
 /**

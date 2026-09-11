@@ -30,7 +30,18 @@ export const getApiUrls = () => {
   return out;
 };
 
-export const getApiOrigin = () => stripTrailingSlash(getRawApiUrl()).replace(/\/api$/i, "");
+export const getApiOrigin = () => {
+  let origin = stripTrailingSlash(getRawApiUrl()).replace(/\/api$/i, "");
+  // Avoid mixed content when admin is served over HTTPS
+  if (
+    typeof window !== "undefined" &&
+    window.location.protocol === "https:" &&
+    /^http:\/\//i.test(origin)
+  ) {
+    origin = origin.replace(/^http:\/\//i, "https://");
+  }
+  return origin;
+};
 
 export const getApiUrl = () => `${getApiOrigin()}/api`;
 

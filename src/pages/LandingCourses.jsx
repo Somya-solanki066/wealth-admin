@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { MdSchool, MdSave, MdAdd, MdDelete, MdCloudUpload } from 'react-icons/md';
 import api from '../services/api';
-import { getApiOrigin } from '../config/api';
+import { resolveMediaUrl } from '../utils/resolveMediaUrl';
 import './LandingCourses.css';
 
 const COURSE_OPTIONS = [
@@ -48,13 +48,6 @@ const EMPTY_COURSE = {
   coachEnrollHref: '',
   coachYoutubeButtonLabel: '',
 };
-
-function resolvePhotoUrl(url) {
-  if (!url) return '';
-  if (/^https?:\/\//i.test(url)) return url;
-  const origin = getApiOrigin();
-  return `${origin}${url.startsWith('/') ? '' : '/'}${url}`;
-}
 
 export default function LandingCourses() {
   const [selectedId, setSelectedId] = useState('witweb');
@@ -293,7 +286,7 @@ export default function LandingCourses() {
                 }
               >
                 {course.bannerImageUrl ? (
-                  <img src={resolvePhotoUrl(course.bannerImageUrl)} alt="Course thumbnail" />
+                  <img src={resolveMediaUrl(course.bannerImageUrl)} alt="Course thumbnail" />
                 ) : (
                   <span>{course.bannerEmoji || '🎬'}</span>
                 )}
@@ -480,7 +473,7 @@ export default function LandingCourses() {
               <div className="lc-photo-preview lc-thumb-preview lc-student-banner-preview">
                 {course.myStudentBannerImageUrl ? (
                   <img
-                    src={resolvePhotoUrl(course.myStudentBannerImageUrl)}
+                    src={resolveMediaUrl(course.myStudentBannerImageUrl)}
                     alt="My Student banner"
                   />
                 ) : (
@@ -522,7 +515,7 @@ export default function LandingCourses() {
             <div className="lc-coach-photo">
               <div className="lc-photo-preview">
                 {course.coachPhotoUrl ? (
-                  <img src={resolvePhotoUrl(course.coachPhotoUrl)} alt="Coach" />
+                  <img src={resolveMediaUrl(course.coachPhotoUrl)} alt="Coach" />
                 ) : (
                   <span>{course.coachPhotoEmoji || '👨‍🏫'}</span>
                 )}

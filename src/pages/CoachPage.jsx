@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { MdPerson, MdSave, MdAdd, MdDelete, MdCloudUpload } from 'react-icons/md';
 import api from '../services/api';
-import { getApiOrigin } from '../config/api';
+import { resolveMediaUrl } from '../utils/resolveMediaUrl';
 import './LandingCourses.css';
 
 const EMPTY_PAGE = {
@@ -21,13 +21,6 @@ const EMPTY_PAGE = {
   communityButtonLabel: '',
   communityUrl: '',
 };
-
-function resolvePhotoUrl(url) {
-  if (!url) return '';
-  if (/^https?:\/\//i.test(url)) return url;
-  const origin = getApiOrigin();
-  return `${origin}${url.startsWith('/') ? '' : '/'}${url}`;
-}
 
 export default function CoachPage() {
   const [page, setPage] = useState(EMPTY_PAGE);
@@ -150,7 +143,7 @@ export default function CoachPage() {
             <div className="lc-coach-photo">
               <div className="lc-photo-preview">
                 {page.photoUrl ? (
-                  <img src={resolvePhotoUrl(page.photoUrl)} alt="Coach" />
+                  <img src={resolveMediaUrl(page.photoUrl)} alt="Coach" />
                 ) : (
                   <span>👤</span>
                 )}
