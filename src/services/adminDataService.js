@@ -18,4 +18,8 @@ export const adminDataService = {
     const response = await api.get('/data/ai-usage', { params });
     return response.data;
   },
+  getAiCreditsMetrics: async (days = 30) => {
+    const response = await api.get('/data/ai-credits-metrics', { params: { days } });
+    return response.data;
+  },
 };

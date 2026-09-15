@@ -35,6 +35,7 @@ import WorldCourses from './pages/WorldCourses';
 import WealthJobs from './pages/WealthJobs';
 import WealthOpenCalls from './pages/WealthOpenCalls';
 import CourseEnrollments from './pages/CourseEnrollments';
+import EmailTemplates from './pages/EmailTemplates';
 import Layout from './components/Layout';
 import './App.css';
 
@@ -80,6 +81,7 @@ function App() {
         <Route path="/content-manager" element={isAuthenticated ? <Layout><ContentManager /></Layout> : <Navigate to="/login" />} />
         <Route path="/landing-courses" element={isAuthenticated ? <Layout><LandingCourses /></Layout> : <Navigate to="/login" />} />
         <Route path="/coach-page" element={isAuthenticated ? <Layout><CoachPage /></Layout> : <Navigate to="/login" />} />
+        <Route path="/email-templates" element={isAuthenticated ? <Layout><EmailTemplates /></Layout> : <Navigate to="/login" />} />
         <Route path="/writing-vault" element={isAuthenticated ? <Layout><WritingVault /></Layout> : <Navigate to="/login" />} />
         <Route path="/short-films" element={isAuthenticated ? <Layout><ShortFilms /></Layout> : <Navigate to="/login" />} />
         <Route path="/script-marketplace" element={isAuthenticated ? <Layout><ScriptMarketplace /></Layout> : <Navigate to="/login" />} />

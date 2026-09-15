@@ -30,6 +30,7 @@ import {
   MdLock,
   MdAccountBalanceWallet,
   MdBadge,
+  MdEmail,
 } from 'react-icons/md';
 import './Layout.css';
 
@@ -49,6 +50,7 @@ const Layout = ({ children }) => {
     { path: '/content-manager', label: 'Content Editor', icon: MdArticle },
     { path: '/landing-courses', label: 'Landing Page Courses', icon: MdSchool },
     { path: '/coach-page', label: 'Coach Page', icon: MdPerson },
+    { path: '/email-templates', label: 'Email Templates', icon: MdEmail },
     { path: '/world-courses', label: 'Courses', icon: MdMenuBook },
     { path: '/course-enrollments', label: 'Course Enrollments', icon: MdSchool },
     { path: '/wealth-jobs', label: 'WEALTH Jobs', icon: MdWork },

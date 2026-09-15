@@ -29,16 +29,23 @@ export default function AiUsage() {
     totalWords: 0,
     loggedCalls: 0,
   });
+  const [creditMetrics, setCreditMetrics] = useState(null);
+  const [inventory, setInventory] = useState([]);
   const [loading, setLoading] = useState(true);
 
   const load = async (toolTab = tab) => {
     setLoading(true);
     try {
       const tool = toolTab === 'all' ? undefined : toolTab;
-      const response = await adminDataService.getAiUsage(tool);
+      const [response, creditsRes] = await Promise.all([
+        adminDataService.getAiUsage(tool),
+        adminDataService.getAiCreditsMetrics(30).catch(() => null),
+      ]);
       setUsers(response.data?.users || []);
       setLogs(response.data?.logs || []);
       setSummary(response.summary || {});
+      setCreditMetrics(creditsRes?.metrics || null);
+      setInventory(creditsRes?.inventory || []);
     } catch (error) {
       console.error('Failed to load AI usage:', error);
       setUsers([]);
@@ -77,6 +84,47 @@ export default function AiUsage() {
         <div><span>Total tokens</span><strong>{Number(summary.totalTokens || 0).toLocaleString()}</strong></div>
         <div><span>Words analyzed</span><strong>{Number(summary.totalWords || 0).toLocaleString()}</strong></div>
       </div>
+
+      {creditMetrics ? (
+        <div className="stats-row" style={{ marginTop: 12 }}>
+          <div><span>Provider cost (30d)</span><strong>${Number(creditMetrics.totalProviderCostUsd || 0).toFixed(4)}</strong></div>
+          <div><span>Credits charged</span><strong>{creditMetrics.totalCreditsCharged || 0}</strong></div>
+          <div><span>Avg cost / active user</span><strong>${Number(creditMetrics.avgCostPerActiveUser || 0).toFixed(4)}</strong></div>
+          <div><span>P95 user cost</span><strong>${Number(creditMetrics.p95UserCostUsd || 0).toFixed(4)}</strong></div>
+          <div><span>Success jobs</span><strong>{creditMetrics.successCount || 0}</strong></div>
+          <div><span>Failed/refunded</span><strong>{creditMetrics.failedOrRefunded || 0}</strong></div>
+        </div>
+      ) : null}
+
+      {inventory.length > 0 ? (
+        <div style={{ marginTop: 16, marginBottom: 20 }}>
+          <h3 className="section-title">AI feature inventory (credit costs)</h3>
+          <div className="table-wrap">
+            <table className="data-table">
+              <thead>
+                <tr>
+                  <th>Tool</th>
+                  <th>World</th>
+                  <th>Credits</th>
+                  <th>Provider</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                {inventory.map((item) => (
+                  <tr key={item.id}>
+                    <td><strong>{item.name}</strong><div className="muted">{item.id}</div></td>
+                    <td>{item.world}</td>
+                    <td>{item.creditCost}</td>
+                    <td>{item.provider} · {item.modelHint}</td>
+                    <td>{item.status}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      ) : null}
 
       <div className="feedback-tabs" style={{ marginBottom: 20 }}>
         {TABS.map((item) => (
