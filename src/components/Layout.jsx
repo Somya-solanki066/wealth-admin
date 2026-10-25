@@ -31,6 +31,7 @@ import {
   MdAccountBalanceWallet,
   MdBadge,
   MdEmail,
+  MdInfo,
 } from 'react-icons/md';
 import './Layout.css';
 
@@ -58,6 +59,9 @@ const Layout = ({ children }) => {
     { path: '/users', label: 'Users', icon: MdPeople },
     { path: '/projects', label: 'Projects', icon: MdFolder },
     { path: '/active-writers', label: 'Active Writers', icon: MdEdit },
+    { path: '/trending-serials', label: 'Trending Serials', icon: MdMenuBook },
+    { path: '/member-stories', label: 'Member Stories', icon: MdMovie },
+    { path: '/about-ink2wealth', label: 'About Ink2Wealth', icon: MdInfo },
     { path: '/premium-users', label: 'Premium Details', icon: MdSettings },
     { path: '/editorial-trends', label: 'Editorial Trends', icon: MdArticle },
     { path: '/ai-config', label: 'AI Config', icon: MdAutoAwesome },
