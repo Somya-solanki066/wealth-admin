@@ -39,6 +39,7 @@ import EmailTemplates from './pages/EmailTemplates';
 import TrendingSerials from './pages/TrendingSerials';
 import MemberStories from './pages/MemberStories';
 import AboutInk2Wealth from './pages/AboutInk2Wealth';
+import SubjectHubs from './pages/SubjectHubs';
 import Layout from './components/Layout';
 import './App.css';
 
@@ -103,6 +104,7 @@ function App() {
         <Route path="/trending-serials" element={isAuthenticated ? <Layout><TrendingSerials /></Layout> : <Navigate to="/login" />} />
         <Route path="/member-stories" element={isAuthenticated ? <Layout><MemberStories /></Layout> : <Navigate to="/login" />} />
         <Route path="/about-ink2wealth" element={isAuthenticated ? <Layout><AboutInk2Wealth /></Layout> : <Navigate to="/login" />} />
+        <Route path="/subject-hubs" element={isAuthenticated ? <Layout><SubjectHubs /></Layout> : <Navigate to="/login" />} />
       </Routes>
     </Router>
   );

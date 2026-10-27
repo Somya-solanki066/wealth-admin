@@ -53,6 +53,7 @@ const Layout = ({ children }) => {
     { path: '/coach-page', label: 'Coach Page', icon: MdPerson },
     { path: '/email-templates', label: 'Email Templates', icon: MdEmail },
     { path: '/world-courses', label: 'Courses', icon: MdMenuBook },
+    { path: '/subject-hubs', label: 'Subject Hubs', icon: MdSchool },
     { path: '/course-enrollments', label: 'Course Enrollments', icon: MdSchool },
     { path: '/wealth-jobs', label: 'WEALTH Jobs', icon: MdWork },
     { path: '/wealth-open-calls', label: 'Open Calls', icon: MdMovieFilter },
