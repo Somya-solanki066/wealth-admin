@@ -40,6 +40,8 @@ import TrendingSerials from './pages/TrendingSerials';
 import MemberStories from './pages/MemberStories';
 import AboutInk2Wealth from './pages/AboutInk2Wealth';
 import SubjectHubs from './pages/SubjectHubs';
+import Connections from './pages/Connections';
+import Messages from './pages/Messages';
 import Layout from './components/Layout';
 import './App.css';
 
@@ -101,10 +103,14 @@ function App() {
         <Route path="/course-enrollments" element={isAuthenticated ? <Layout><CourseEnrollments /></Layout> : <Navigate to="/login" />} />
         <Route path="/wealth-jobs" element={isAuthenticated ? <Layout><WealthJobs /></Layout> : <Navigate to="/login" />} />
         <Route path="/wealth-open-calls" element={isAuthenticated ? <Layout><WealthOpenCalls /></Layout> : <Navigate to="/login" />} />
-        <Route path="/trending-serials" element={isAuthenticated ? <Layout><TrendingSerials /></Layout> : <Navigate to="/login" />} />
+        <Route path="/benefit-programs" element={isAuthenticated ? <Layout><TrendingSerials key="benefit-programs" defaultTab="writers" /></Layout> : <Navigate to="/login" />} />
+        <Route path="/contracts" element={isAuthenticated ? <Layout><TrendingSerials key="contracts" defaultTab="writers" /></Layout> : <Navigate to="/login" />} />
+        <Route path="/trending-serials" element={isAuthenticated ? <Layout><TrendingSerials key="trending-serials" defaultTab="serials" /></Layout> : <Navigate to="/login" />} />
         <Route path="/member-stories" element={isAuthenticated ? <Layout><MemberStories /></Layout> : <Navigate to="/login" />} />
         <Route path="/about-ink2wealth" element={isAuthenticated ? <Layout><AboutInk2Wealth /></Layout> : <Navigate to="/login" />} />
         <Route path="/subject-hubs" element={isAuthenticated ? <Layout><SubjectHubs /></Layout> : <Navigate to="/login" />} />
+        <Route path="/connections" element={isAuthenticated ? <Layout><Connections /></Layout> : <Navigate to="/login" />} />
+        <Route path="/messages" element={isAuthenticated ? <Layout><Messages /></Layout> : <Navigate to="/login" />} />
       </Routes>
     </Router>
   );

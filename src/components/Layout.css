@@ -78,6 +78,36 @@
   overflow-y: auto;
 }
 
+.sidebar-nav::-webkit-scrollbar {
+  width: 5px;
+}
+
+.sidebar-nav::-webkit-scrollbar-thumb {
+  background: #242424;
+  border-radius: 4px;
+}
+
+.sidebar-section {
+  margin-bottom: 6px;
+}
+
+.sidebar-section-title {
+  padding: 12px 20px 4px 20px;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 1.2px;
+  color: #C9A84C;
+  text-transform: uppercase;
+  opacity: 0.85;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.sidebar.closed .sidebar-section-title {
+  display: none;
+}
+
 .nav-item {
   display: flex;
   align-items: center;

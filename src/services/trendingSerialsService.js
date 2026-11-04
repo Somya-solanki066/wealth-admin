@@ -59,4 +59,36 @@ export const trendingSerialsService = {
     });
     return response.data;
   },
+
+  getSubmissions: async () => {
+    const response = await api.get('/trending-serials/admin/submissions');
+    return response.data;
+  },
+
+  actionSubmission: async (id, action, notes = '') => {
+    const response = await api.post(`/trending-serials/admin/submissions/${id}/action`, {
+      action,
+      notes,
+    });
+    return response.data;
+  },
+
+  getContractApplications: async () => {
+    const response = await api.get('/contracts/admin/applications');
+    return response.data;
+  },
+
+  decideContractApplication: async (id, decision, editorReasons = [], editorNote = '') => {
+    const response = await api.post(`/contracts/admin/applications/${id}/decision`, {
+      decision,
+      editorReasons,
+      editorNote,
+    });
+    return response.data;
+  },
+
+  getAeAdminData: async () => {
+    const response = await api.get('/contracts/admin/ae-data');
+    return response.data;
+  },
 };
