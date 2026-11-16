@@ -370,7 +370,26 @@ export default function WritingVault() {
 
   const genreOptions = meta.genres?.length
     ? meta.genres.filter((g) => g !== 'All Genres')
-    : ['Werewolf', 'Vampire', 'Billionaire', 'Romance', 'Fantasy', 'Thriller'];
+    : [
+        'Werewolf',
+        'Vampire',
+        'Mafia Romance',
+        'Billionaire',
+        'Romance',
+        'Dark Romance',
+        'Historical Romance',
+        'Historical Fiction',
+        'Fantasy',
+        'Urban Fantasy',
+        'Rebirth/Reincarnation',
+        'Transmigration/Time Travel',
+        'Martial Arts/Wuxia',
+        'Cultivation/Xianxia',
+        'Thriller',
+        'Mystery/Crime',
+        'Horror',
+        'Science Fiction',
+      ];
 
   return (
     <div className="ai-config-page">

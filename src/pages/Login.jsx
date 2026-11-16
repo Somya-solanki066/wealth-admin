@@ -56,6 +56,7 @@ const Login = ({ setIsAuthenticated }) => {
     <div className="login-container">
       <div className="login-card">
         <div className="login-header">
+          <img src="/brand/logo.webp" alt="Ink2Wealth" className="login-logo" />
           <h1>Ink2Wealth Admin Panel</h1>
           <p>Sign in to continue</p>
         </div>

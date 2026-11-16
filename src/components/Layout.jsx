@@ -38,6 +38,8 @@ import {
   MdWeb,
   MdHub,
   MdChat,
+  MdMovieCreation,
+  MdViewCarousel,
 } from 'react-icons/md';
 import './Layout.css';
 
@@ -76,6 +78,7 @@ const Layout = ({ children }) => {
     {
       title: 'FILMS & SCREENWRITERS',
       items: [
+        { path: '/trending-scripts', label: 'Trending Scripts', icon: MdMovieCreation },
         { path: '/screenwriter-portfolios', label: 'SW Portfolios', icon: MdBadge },
         { path: '/portfolio-settings', label: 'Portfolio Settings', icon: MdWork },
         { path: '/script-marketplace', label: 'Script Marketplace', icon: MdStorefront },
@@ -109,6 +112,7 @@ const Layout = ({ children }) => {
     {
       title: 'CONTENT & EDITORIAL',
       items: [
+        { path: '/world-banners', label: 'World Banners', icon: MdViewCarousel },
         { path: '/content-manager', label: 'Content Editor', icon: MdArticle },
         { path: '/posts', label: 'Posts Feed', icon: MdDynamicFeed },
         { path: '/pages', label: 'Pages', icon: MdWeb },
@@ -172,6 +176,7 @@ const Layout = ({ children }) => {
         className={`sidebar ${sidebarOpen ? 'open' : 'closed'} ${mobileMenuOpen ? 'mobile-open' : ''}`}
       >
         <div className="sidebar-header">
+          <img src="/brand/logo.webp" alt="Ink2Wealth" className="brand-logo" />
           <h2>Ink2Wealth Admin</h2>
           <button
             type="button"

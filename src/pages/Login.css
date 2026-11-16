@@ -21,6 +21,14 @@
   margin-bottom: 30px;
 }
 
+.login-logo {
+  width: 64px;
+  height: 64px;
+  object-fit: contain;
+  margin: 0 auto 14px;
+  display: block;
+}
+
 .login-header h1 {
   margin: 0 0 10px 0;
   color: #C9A84C;

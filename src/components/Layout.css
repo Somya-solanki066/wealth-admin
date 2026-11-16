@@ -32,6 +32,13 @@
   border-bottom: 1px solid #242424;
 }
 
+.brand-logo {
+  width: 36px;
+  height: 36px;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+
 .sidebar-header h2 {
   margin: 0;
   font-size: 18px;
@@ -104,8 +111,14 @@
   text-overflow: ellipsis;
 }
 
-.sidebar.closed .sidebar-section-title {
+.sidebar.closed .sidebar-section-title,
+.sidebar.closed .sidebar-header h2 {
   display: none;
+}
+
+.sidebar.closed .sidebar-header {
+  justify-content: center;
+  padding: 16px 8px;
 }
 
 .nav-item {

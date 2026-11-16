@@ -37,8 +37,10 @@ import WealthOpenCalls from './pages/WealthOpenCalls';
 import CourseEnrollments from './pages/CourseEnrollments';
 import EmailTemplates from './pages/EmailTemplates';
 import TrendingSerials from './pages/TrendingSerials';
+import TrendingScripts from './pages/TrendingScripts';
 import MemberStories from './pages/MemberStories';
 import AboutInk2Wealth from './pages/AboutInk2Wealth';
+import WorldBanners from './pages/WorldBanners';
 import SubjectHubs from './pages/SubjectHubs';
 import Connections from './pages/Connections';
 import Messages from './pages/Messages';
@@ -106,7 +108,9 @@ function App() {
         <Route path="/benefit-programs" element={isAuthenticated ? <Layout><TrendingSerials key="benefit-programs" defaultTab="writers" /></Layout> : <Navigate to="/login" />} />
         <Route path="/contracts" element={isAuthenticated ? <Layout><TrendingSerials key="contracts" defaultTab="writers" /></Layout> : <Navigate to="/login" />} />
         <Route path="/trending-serials" element={isAuthenticated ? <Layout><TrendingSerials key="trending-serials" defaultTab="serials" /></Layout> : <Navigate to="/login" />} />
+        <Route path="/trending-scripts" element={isAuthenticated ? <Layout><TrendingScripts /></Layout> : <Navigate to="/login" />} />
         <Route path="/member-stories" element={isAuthenticated ? <Layout><MemberStories /></Layout> : <Navigate to="/login" />} />
+        <Route path="/world-banners" element={isAuthenticated ? <Layout><WorldBanners /></Layout> : <Navigate to="/login" />} />
         <Route path="/about-ink2wealth" element={isAuthenticated ? <Layout><AboutInk2Wealth /></Layout> : <Navigate to="/login" />} />
         <Route path="/subject-hubs" element={isAuthenticated ? <Layout><SubjectHubs /></Layout> : <Navigate to="/login" />} />
         <Route path="/connections" element={isAuthenticated ? <Layout><Connections /></Layout> : <Navigate to="/login" />} />
