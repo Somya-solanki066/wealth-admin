@@ -1534,7 +1534,7 @@ const TrendingSerials = ({ defaultTab }) => {
               </div>
               <div className="ts-stat-info">
                 <h3>
-                  ₦{(aeData.profiles?.reduce((acc, p) => acc + (p.totalEarned || 0), 0) || 45000).toLocaleString()}
+                  ${(aeData.profiles?.reduce((acc, p) => acc + (p.totalEarned || 0), 0) || 45000).toLocaleString()}
                 </h3>
                 <p>Total Referral Bonuses</p>
               </div>
@@ -1573,10 +1573,10 @@ const TrendingSerials = ({ defaultTab }) => {
                       <span style={{ color: '#22c55e', fontWeight: '700' }}>{p.contractedCount || 0} signed</span>
                     </td>
                     <td>
-                      <strong style={{ color: '#C9A84C' }}>₦{(p.totalEarned || 0).toLocaleString()}</strong>
+                      <strong style={{ color: '#C9A84C' }}>${(p.totalEarned || 0).toLocaleString()}</strong>
                     </td>
                     <td>
-                      <span style={{ color: '#38bdf8', fontWeight: '700' }}>₦{(p.availableBalance || 0).toLocaleString()}</span>
+                      <span style={{ color: '#38bdf8', fontWeight: '700' }}>${(p.availableBalance || 0).toLocaleString()}</span>
                     </td>
                   </tr>
                 ))}
@@ -1615,7 +1615,7 @@ const TrendingSerials = ({ defaultTab }) => {
                       <td><code>{w.accountNumber}</code></td>
                       <td>{w.accountName}</td>
                       <td>
-                        <strong style={{ color: '#4ade80' }}>₦{(w.amount || 0).toLocaleString()}</strong>
+                        <strong style={{ color: '#4ade80' }}>${(w.amount || 0).toLocaleString()}</strong>
                       </td>
                       <td>
                         <span className="ts-badge ts-badge-status">{w.status}</span>

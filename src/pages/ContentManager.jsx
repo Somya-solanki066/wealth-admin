@@ -33,16 +33,16 @@ const DEFAULT_CONTENT = {
     pageTitleGold: "Upgrade Anytime.",
     pageSubtitle: "Choose the plan that works for you. Cancel anytime. No hidden fees.",
     plan1Name: "Free",
-    plan1Price: "₦0",
+    plan1Price: "$0",
     plan1Period: "Forever free",
     plan2Name: "6-Month Plan",
-    plan2Price: "₦24,900",
+    plan2Price: "$24,900",
     plan2Period: "every 6 months",
     plan3Name: "Yearly Plan",
-    plan3Price: "₦49,900",
+    plan3Price: "$49,900",
     plan3Period: "per year",
     monthlyTitle: "Monthly Plan Available Too",
-    monthlySubtitle: "Start month by month for just ₦6,900 — cancel anytime."
+    monthlySubtitle: "Start month by month for just $6,900 — cancel anytime."
   },
   "features": {
     heroPreTitle: "Everything You Need",

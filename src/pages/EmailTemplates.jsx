@@ -12,6 +12,7 @@ export default function EmailTemplates() {
   const [testing, setTesting] = useState(false);
   const [testTo, setTestTo] = useState('');
   const [message, setMessage] = useState({ text: '', type: '' });
+  const [brand, setBrand] = useState({ img_01: '', img_02: '', img_03: '', img_04: '', img_05: '', img_06: '', img_07: '', img_08: '', img_09: '', img_10: '', app_guide_link: '', logoUrl: '' });
 
   const showMessage = (text, type = 'success') => {
     setMessage({ text, type });
@@ -21,7 +22,11 @@ export default function EmailTemplates() {
   const loadTemplates = async () => {
     setLoading(true);
     try {
-      const res = await api.get('/email-templates');
+      const [res, brandRes] = await Promise.all([
+        api.get('/email-templates'),
+        api.get('/email-templates/brand').catch(() => ({ data: {} })),
+      ]);
+      if (brandRes.data?.brand) setBrand((prev) => ({ ...prev, ...brandRes.data.brand }));
       const list = res.data?.templates || [];
       setTemplates(list);
       if (!selectedId && list[0]) {
@@ -114,9 +119,44 @@ export default function EmailTemplates() {
         <div>
           <h1 style={{ margin: 0 }}>Email Templates</h1>
           <p style={{ margin: '4px 0 0', opacity: 0.7, fontSize: 14 }}>
-            Edit transactional copy. Placeholders use {'{{name}}'} style tokens.
+            Edit transactional HTML here — no app release needed. Use {'{{first_name}}'}, {'{{img_01}}'} … {'{{img_10}}'}.
           </p>
         </div>
+      </div>
+
+      <div style={{ marginTop: 16, padding: 16, border: '1px solid #2a2a2a', borderRadius: 8, background: '#121212' }}>
+        <h3 style={{ margin: '0 0 8px' }}>Welcome email images &amp; PDF</h3>
+        <p style={{ margin: '0 0 12px', fontSize: 13, opacity: 0.7 }}>
+          Host screenshots on Cloudinary or ink2wealth.co (under 150 KB, 560px wide). Empty slots are hidden.
+        </p>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(240px, 1fr))', gap: 10 }}>
+          {['logoUrl', 'app_guide_link', 'img_01', 'img_02', 'img_03', 'img_04', 'img_05', 'img_06', 'img_07', 'img_08', 'img_09', 'img_10'].map((key) => (
+            <label key={key} style={{ fontSize: 11, opacity: 0.8 }}>
+              {key}
+              <input
+                className="cm-input"
+                style={{ width: '100%', marginTop: 4 }}
+                value={brand[key] || ''}
+                onChange={(e) => setBrand((prev) => ({ ...prev, [key]: e.target.value }))}
+              />
+            </label>
+          ))}
+        </div>
+        <button
+          type="button"
+          className="cm-btn primary"
+          style={{ marginTop: 12 }}
+          onClick={async () => {
+            try {
+              await api.put('/email-templates/brand', { brand });
+              showMessage('Email images saved');
+            } catch (err) {
+              showMessage(err.response?.data?.error || 'Failed to save images', 'error');
+            }
+          }}
+        >
+          Save image URLs
+        </button>
       </div>
 
       {message.text ? (
@@ -229,7 +269,7 @@ export default function EmailTemplates() {
               />
 
               <label className="cm-label" style={{ display: 'block', marginTop: 14 }}>
-                HTML body (inner content — branded layout wraps this)
+                HTML body (white branded wrapper is added automatically)
               </label>
               <textarea
                 className="cm-textarea"

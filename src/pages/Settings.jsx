@@ -138,9 +138,9 @@ const Settings = () => {
       id: `${prefix}plan_${Date.now()}`,
       world: activeWorld,
       name: 'NEW PLAN',
-      price: '₦0',
+      price: '$0',
       priceAmount: 0,
-      currency: 'ngn',
+      currency: 'usd',
       durationDays: defaultType === 'monthly' ? 30 : 365,
       period: defaultType === 'monthly' ? 'per month' : 'per year',
       badge: '',
@@ -326,11 +326,11 @@ const Settings = () => {
               <input type="text" value={selectedPlan.name} onChange={(e) => handlePlanChange('name', e.target.value)} />
             </div>
             <div className="form-group">
-              <label>Price Display (e.g. ₦24,900)</label>
+              <label>Price Display (e.g. $24,900)</label>
               <input type="text" value={selectedPlan.price} onChange={(e) => handlePlanChange('price', e.target.value)} />
             </div>
             <div className="form-group">
-              <label>Charge Amount (naira, no symbol)</label>
+              <label>Charge Amount (USD, no symbol)</label>
               <input
                 type="number"
                 min="0"
@@ -342,7 +342,7 @@ const Settings = () => {
               <label>Currency</label>
               <input
                 type="text"
-                value={selectedPlan.currency || 'ngn'}
+                value={selectedPlan.currency || 'usd'}
                 onChange={(e) => handlePlanChange('currency', e.target.value.toLowerCase())}
               />
             </div>

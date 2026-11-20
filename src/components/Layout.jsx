@@ -40,6 +40,8 @@ import {
   MdChat,
   MdMovieCreation,
   MdViewCarousel,
+  MdDashboardCustomize,
+  MdPersonOff,
 } from 'react-icons/md';
 import './Layout.css';
 
@@ -60,6 +62,7 @@ const Layout = ({ children }) => {
       items: [
         { path: '/dashboard', label: 'Dashboard', icon: MdDashboard },
         { path: '/users', label: 'Users', icon: MdPeople },
+        { path: '/deleted-accounts', label: 'Deleted Accounts', icon: MdPersonOff },
         { path: '/premium-users', label: 'Premium Details', icon: MdSettings },
         { path: '/students', label: 'Students', icon: MdSchool },
         { path: '/teachers', label: 'Teachers', icon: MdPerson },
@@ -113,6 +116,7 @@ const Layout = ({ children }) => {
       title: 'CONTENT & EDITORIAL',
       items: [
         { path: '/world-banners', label: 'World Banners', icon: MdViewCarousel },
+        { path: '/tool-cards', label: 'Tool Cards', icon: MdDashboardCustomize },
         { path: '/content-manager', label: 'Content Editor', icon: MdArticle },
         { path: '/posts', label: 'Posts Feed', icon: MdDynamicFeed },
         { path: '/pages', label: 'Pages', icon: MdWeb },

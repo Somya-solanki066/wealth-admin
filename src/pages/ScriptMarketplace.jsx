@@ -143,8 +143,8 @@ export default function ScriptMarketplace() {
                     <td>{l.scriptType}</td>
                     <td>{l.pageCount}</td>
                     <td>
-                      {l.priceNGN ? `₦${l.priceNGN}` : ''}
-                      {l.optionPriceNGN ? ` / Opt ₦${l.optionPriceNGN}` : ''}
+                      {l.priceNGN ? `$${l.priceNGN}` : ''}
+                      {l.optionPriceNGN ? ` / Opt $${l.optionPriceNGN}` : ''}
                     </td>
                     <td>{l.dealType}</td>
                     <td>

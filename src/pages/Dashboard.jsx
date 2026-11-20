@@ -21,12 +21,12 @@ function formatDate(value) {
   return date ? date.toLocaleDateString() : 'N/A';
 }
 
-function formatMoney(amount, currency = 'ngn') {
+function formatMoney(amount, currency = 'usd') {
   const value = Number(amount || 0) / 100;
   try {
     return new Intl.NumberFormat(undefined, {
       style: 'currency',
-      currency: String(currency || 'ngn').toUpperCase(),
+      currency: String(currency || 'usd').toUpperCase(),
       maximumFractionDigits: 0,
     }).format(value);
   } catch {

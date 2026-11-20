@@ -41,9 +41,11 @@ import TrendingScripts from './pages/TrendingScripts';
 import MemberStories from './pages/MemberStories';
 import AboutInk2Wealth from './pages/AboutInk2Wealth';
 import WorldBanners from './pages/WorldBanners';
+import ToolCards from './pages/ToolCards';
 import SubjectHubs from './pages/SubjectHubs';
 import Connections from './pages/Connections';
 import Messages from './pages/Messages';
+import DeletedAccounts from './pages/DeletedAccounts';
 import Layout from './components/Layout';
 import './App.css';
 
@@ -72,6 +74,7 @@ function App() {
         <Route path="/" element={isAuthenticated ? <Layout><Dashboard /></Layout> : <Navigate to="/login" />} />
         <Route path="/dashboard" element={isAuthenticated ? <Layout><Dashboard /></Layout> : <Navigate to="/login" />} />
         <Route path="/users" element={isAuthenticated ? <Layout><Users /></Layout> : <Navigate to="/login" />} />
+        <Route path="/deleted-accounts" element={isAuthenticated ? <Layout><DeletedAccounts /></Layout> : <Navigate to="/login" />} />
         <Route path="/premium-users" element={isAuthenticated ? <Layout><PremiumUsers /></Layout> : <Navigate to="/login" />} />
         <Route path="/editorial-trends" element={isAuthenticated ? <Layout><EditorialTrends /></Layout> : <Navigate to="/login" />} />
         <Route path="/posts" element={isAuthenticated ? <Layout><Posts /></Layout> : <Navigate to="/login" />} />
@@ -111,6 +114,7 @@ function App() {
         <Route path="/trending-scripts" element={isAuthenticated ? <Layout><TrendingScripts /></Layout> : <Navigate to="/login" />} />
         <Route path="/member-stories" element={isAuthenticated ? <Layout><MemberStories /></Layout> : <Navigate to="/login" />} />
         <Route path="/world-banners" element={isAuthenticated ? <Layout><WorldBanners /></Layout> : <Navigate to="/login" />} />
+        <Route path="/tool-cards" element={isAuthenticated ? <Layout><ToolCards /></Layout> : <Navigate to="/login" />} />
         <Route path="/about-ink2wealth" element={isAuthenticated ? <Layout><AboutInk2Wealth /></Layout> : <Navigate to="/login" />} />
         <Route path="/subject-hubs" element={isAuthenticated ? <Layout><SubjectHubs /></Layout> : <Navigate to="/login" />} />
         <Route path="/connections" element={isAuthenticated ? <Layout><Connections /></Layout> : <Navigate to="/login" />} />

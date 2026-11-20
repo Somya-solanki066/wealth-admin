@@ -21,9 +21,9 @@ function formatDate(value) {
   return Number.isNaN(d.getTime()) ? value : d.toLocaleDateString();
 }
 
-function formatMoney(amount, currency = 'NGN') {
+function formatMoney(amount, currency = 'USD') {
   if (!amount && amount !== 0) return '—';
-  return `${currency === 'NGN' ? '₦' : ''}${Number(amount).toLocaleString()}`;
+  return `${currency === 'USD' ? '$' : ''}${Number(amount).toLocaleString()}`;
 }
 
 export default function CourseEnrollments() {
